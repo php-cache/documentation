@@ -75,22 +75,44 @@ We also have a chain adapter where you can chain multiple pool together. It is g
 
 #### Symfony
 
-There are have two Symfony bundles; [AdapterBundle](https://github.com/php-cache/adapter-bundle) and [CacheBundle](https://github.com/php-cache/cache-bundle). 
+There are have two Symfony bundles; [AdapterBundle] and [CacheBundle]. 
 
-The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  [CacheBundle](https://github.com/php-cache/cache-bundle) is used to integrate *any* PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
+The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  [CacheBundle](https://github.com/php-cache/cache-bundle) is used to integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
 
+## Organisation overview
 
+Except for our apdaters we have the following packages
+
+| Name | Description | Badges |
+| ---- | ----------- | ------ |
+| [AdapterBundle] | Bundle to register adapters to services. | [![Latest Stable Version](https://poser.pugx.org/cache/adapter-bundle/v/stable)](https://packagist.org/packages/cache/adapter-bundle) [![Total Downloads](https://poser.pugx.org/cache/adapter-bundle/downloads)](https://packagist.org/packages/cache/adapter-bundle)
+| [Adapter common] | The `AbstractCachePool` and `CacheItem` lives here. | [![Latest Stable Version](https://poser.pugx.org/cache/adapter-common/v/stable)](https://packagist.org/packages/cache/adapter-common) [![Total Downloads](https://poser.pugx.org/cache/adapter-common/downloads)](https://packagist.org/packages/cache/adapter-common)
+| [CacheBundle] | Bundle to integrate **any** PSR-6 service with the Symfony framework. | [![Latest Stable Version](https://poser.pugx.org/cache/cache-bundle/v/stable)](https://packagist.org/packages/cache/cache-bundle) [![Total Downloads](https://poser.pugx.org/cache/cache-bundle/downloads)](https://packagist.org/packages/cache/cache-bundle)
+| [Doctrine bride] | A bridge from PSR-6 to DoctrineCache | [![Latest Stable Version](https://poser.pugx.org/cache/psr-6-doctrine-bridge/v/stable)](https://packagist.org/packages/cache/psr-6-doctrine-bridge) [![Total Downloads](https://poser.pugx.org/cache/psr-6-doctrine-bridge/downloads)](https://packagist.org/packages/cache/psr-6-doctrine-bridge)
+| [Hieracrchial cache] | A trait and interface to support cache hierachy | [![Latest Stable Version](https://poser.pugx.org/cache/hierarchical-cache/v/stable)](https://packagist.org/packages/cache/hierarchical-cache) [![Total Downloads](https://poser.pugx.org/cache/hierarchical-cache/downloads)](https://packagist.org/packages/cache/hierarchical-cache)
+| [Integration tests] | Used to verify **any** PSR-6 implementation | [![Latest Stable Version](https://poser.pugx.org/cache/integration-tests/v/stable)](https://packagist.org/packages/cache/integration-tests) [![Total Downloads](https://poser.pugx.org/cache/integration-tests/downloads)](https://packagist.org/packages/cache/integration-tests)
+| [Taggable cache] | Tratis and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
+
+[AdapterBundle]: https://github.com/php-cache/adapter-bundle
+[Adapter common]: https://github.com/php-cache/adapter-common
 [Apc]: https://github.com/php-cache/apc-adapter
 [Apcu]: https://github.com/php-cache/apcu-adapter
 [Array]: https://github.com/php-cache/array-adapter
+[CacheBundle]: https://github.com/php-cache/cache-bundle
+[Chain]: https://github.com/php-cache/chain-adapter
+[Doctrine]: https://github.com/php-cache/doctrine-adapter
+[Doctrine bride]: https://github.com/php-cache/doctrine-bridge
 [Filesystem]: https://github.com/php-cache/filesystem-adapter
+[Hieracrchial cache]: https://github.com/php-cache/hierarchical-cache
+[Integration tests]: https://github.com/php-cache/integration-tests
 [Memcache]: https://github.com/php-cache/memcache-adapter
 [Memcached]: https://github.com/php-cache/memcached-adapter
 [MongoDB]: https://github.com/php-cache/mongodb-adapter
 [Predis]: https://github.com/php-cache/rredis-adapter
 [Redis]: https://github.com/php-cache/redis-adapter
+[Taggable cache]: https://github.com/php-cache/taggable-cache
 [Void]: https://github.com/php-cache/void-adapter
 
-[Doctrine]: https://github.com/php-cache/doctrine-adapter
+
 [Flysystem]: http://flysystem.thephpleague.com/
 
