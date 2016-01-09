@@ -47,22 +47,22 @@ Each adapter has it own features. The table below list all our adapters and thei
 
 | Adapter | Tagging | Hierarcy | Removes stalled | Badges |
 | ------- | ------- | -------- | --------------- | ------ |
-| [Apc] | Yes | No  | No
-| Apcu | Yes | No | No
-| Array | Yes | No | No
-| Couchbase (via Doctrine)| Yes | No | ??
-| Filesystem (via Flysystem) | Yes | No | No
-| Memcache | Yes | No | Yes
-| Memcached | Yes | No | Yes
-| MongoDB | Yes | No | No
-| Predis| Yes | Yes | Yes
-| Redis | Yes | No | Yes
-| Riak (via Doctrine)| Yes | No | ??
-| SQLite3 (via Doctrine)| Yes | No | No
-| Void| Yes | No | No
-| WinCache (via Doctrine)| Yes | No | ??
-| Xcache (via Doctrine)| Yes | No | ??
-| ZendData (via Doctrine)| Yes | No | ??
+| [Apc] | Yes | No  | No |
+| [Apcu] | Yes | No | No |
+| [Array] | Yes | No | No |
+| Couchbase (via [Doctrine])| Yes | No |  |
+| [Filesystem] (via [Flysystem]) | Yes | No | No |
+| [Memcache] | Yes | No | Yes |
+| [Memcached] | Yes | No | Yes |
+| [MongoDB] | Yes | No | No |
+| [Predis]| Yes | Yes | Yes |
+| [Redis] | Yes | No | Yes |
+| Riak (via [Doctrine])| Yes | No |  |
+| SQLite3 (via [Doctrine])| Yes | No | No |
+| [Void| Yes | No | No |
+| WinCache (via [Doctrine])| Yes | No |  |
+| Xcache (via [Doctrine])| Yes | No |  |
+| ZendData (via [Doctrine])| Yes | No |  |
 
 #### Chain adapter
 
@@ -78,9 +78,16 @@ The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symf
 
 
 [Apc]: https://github.com/php-cache/apc-adapter
-[Apc]: https://github.com/php-cache/apc-adapter
-[Apc]: https://github.com/php-cache/apc-adapter
-[Apc]: https://github.com/php-cache/apc-adapter
-[Apc]: https://github.com/php-cache/apc-adapter
-[Apc]: https://github.com/php-cache/apc-adapter
-[Apc]: https://github.com/php-cache/apc-adapter
+[Apcu]: https://github.com/php-cache/apcu-adapter
+[Array]: https://github.com/php-cache/array-adapter
+[Filesystem]: https://github.com/php-cache/filesystem-adapter
+[Memcache]: https://github.com/php-cache/memcache-adapter
+[Memcached]: https://github.com/php-cache/memcached-adapter
+[MongoDB]: https://github.com/php-cache/mongodb-adapter
+[Predis]: https://github.com/php-cache/rredis-adapter
+[Redis]: https://github.com/php-cache/redis-adapter
+[Void]: https://github.com/php-cache/void-adapter
+
+[Doctrine]: https://github.com/php-cache/doctrine-adapter
+[Flysystem]: http://flysystem.thephpleague.com/
+
