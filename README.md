@@ -25,7 +25,7 @@ $pool->getItem('bow', ['london_districts'])->isHit(); // false
 
 #### Hierachy
 
-Think of a hierarchy like a file system. If you remove a folder A, all items and folder in A will also be removed. A hierachy cache key must start with pipe ("|").
+Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierachy cache key must start with pipe ("|").
 
 
 ```php
@@ -34,9 +34,9 @@ $pool->deleteItem('|users|4711|followers');
 $pool->hasItem('|users|4711|followers|12|likes'); // False
 ```
 
-#### Removes stalled items
+#### Remove stalled items
 
-When you do tagging or hierachy we store lots of items in cache that are never removed. Some implementations of cache (not adapters nor pools) like Redis and Memcache will automatically remove these when they stalled or not longer used. That is why tagging and hierarchy will work better on such implementation.  
+Tagging and hierachy store lots of extra items in cache that never are activly removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they stalled or not longer used. That is why tagging and hierarchy will work better on such cache storages.  
 
 
 ## Cache pool implementations
