@@ -65,7 +65,7 @@ Each adapter has it own features. The table below list all our adapters and thei
 | Xcache (via [Doctrine])| Yes | No |  | 
 | ZendData (via [Doctrine])| Yes | No |  | 
 | | | | | 
-| Chain | Yes | | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
+| [Chain] | Yes | | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
 
 #### Chain adapter
 
