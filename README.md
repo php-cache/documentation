@@ -47,22 +47,23 @@ Each adapter has it own features. The table below list all our adapters and thei
 
 | Adapter | Tagging | Hierarcy | Removes stalled | Badges |
 | ------- | ------- | -------- | --------------- | ------ |
-| [Apc] | Yes | No  | No |
-| [Apcu] | Yes | No | No |
-| [Array] | Yes | No | No |
-| Couchbase (via [Doctrine])| Yes | No |  |
-| [Filesystem] (via [Flysystem]) | Yes | No | No |
-| [Memcache] | Yes | No | Yes |
-| [Memcached] | Yes | No | Yes |
-| [MongoDB] | Yes | No | No |
-| [Predis]| Yes | Yes | Yes |
-| [Redis] | Yes | No | Yes |
-| Riak (via [Doctrine])| Yes | No |  |
-| SQLite3 (via [Doctrine])| Yes | No | No |
-| [Void| Yes | No | No |
-| WinCache (via [Doctrine])| Yes | No |  |
-| Xcache (via [Doctrine])| Yes | No |  |
-| ZendData (via [Doctrine])| Yes | No |  |
+| [Apc] | Yes | No  | No | [![Latest Stable Version](https://poser.pugx.org/cache/apc-adapter/v/stable)](https://packagist.org/packages/cache/apc-adapter) [![Total Downloads](https://poser.pugx.org/cache/apc-adapter/downloads)](https://packagist.org/packages/cache/apc-adapter)
+| [Apcu] | Yes | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/apcu-adapter/v/stable)](https://packagist.org/packages/cache/apcu-adapter) [![Total Downloads](https://poser.pugx.org/cache/apcu-adapter/downloads)](https://packagist.org/packages/cache/apcu-adapter)
+| [Array] | Yes | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/array-adapter/v/stable)](https://packagist.org/packages/cache/array-adapter) [![Total Downloads](https://poser.pugx.org/cache/array-adapter/downloads)](https://packagist.org/packages/cache/array-adapter)
+| Couchbase (via [Doctrine])| Yes | No |  | 
+| [Doctrine] | Yes | No | Depends |  [![Latest Stable Version](https://poser.pugx.org/cache/doctrine-adapter/v/stable)](https://packagist.org/packages/cache/doctrine-adapter) [![Total Downloads](https://poser.pugx.org/cache/doctrine-adapter/downloads)](https://packagist.org/packages/cache/doctrine-adapter)
+| [Filesystem](https://github.com/php-cache/filesystem-adapter) (via [Flysystem]) | Yes | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/filesystem-adapter/v/stable)](https://packagist.org/packages/cache/filesystem-adapter) [![Total Downloads](https://poser.pugx.org/cache/filesystem-adapter/downloads)](https://packagist.org/packages/cache/filesystem-adapter)
+| [Memcache] | Yes | No | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/memcache-adapter/v/stable)](https://packagist.org/packages/cache/memcache-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcache-adapter/downloads)](https://packagist.org/packages/cache/memcache-adapter)
+| [Memcached] | Yes | No | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/memcached-adapter/v/stable)](https://packagist.org/packages/cache/memcached-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcached-adapter/downloads)](https://packagist.org/packages/cache/memcached-adapter)
+| [MongoDB] | Yes | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/mongodb-adapter/v/stable)](https://packagist.org/packages/cache/mongodb-adapter) [![Total Downloads](https://poser.pugx.org/cache/mongodb-adapter/downloads)](https://packagist.org/packages/cache/mongodb-adapter)
+| [Predis]| Yes | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/predis-adapter/v/stable)](https://packagist.org/packages/cache/predis-adapter) [![Total Downloads](https://poser.pugx.org/cache/predis-adapter/downloads)](https://packagist.org/packages/cache/predis-adapter)
+| [Redis] | Yes | No | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/redis-adapter/v/stable)](https://packagist.org/packages/cache/redis-adapter) [![Total Downloads](https://poser.pugx.org/cache/redis-adapter/downloads)](https://packagist.org/packages/cache/redis-adapter)
+| Riak (via [Doctrine])| Yes | No |  | 
+| SQLite3 (via [Doctrine])| Yes | No | No | 
+| [Void] | Yes | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/void-adapter/v/stable)](https://packagist.org/packages/cache/void-adapter) [![Total Downloads](https://poser.pugx.org/cache/void-adapter/downloads)](https://packagist.org/packages/cache/void-adapter)
+| WinCache (via [Doctrine])| Yes | No |  | 
+| Xcache (via [Doctrine])| Yes | No |  | 
+| ZendData (via [Doctrine])| Yes | No |  | 
 
 #### Chain adapter
 
