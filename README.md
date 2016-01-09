@@ -77,7 +77,7 @@ We also have a chain adapter where you can chain multiple pool together. It is g
 
 There are have two Symfony bundles; [AdapterBundle] and [CacheBundle]. 
 
-The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  [CacheBundle](https://github.com/php-cache/cache-bundle) is used to integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
+The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  CacheBundle is used to integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
 
 ## Organisation overview
 
