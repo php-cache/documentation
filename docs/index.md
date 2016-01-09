@@ -112,7 +112,7 @@ Except for our apdaters we have the following packages
 [Memcache]: https://github.com/php-cache/memcache-adapter
 [Memcached]: https://github.com/php-cache/memcached-adapter
 [MongoDB]: https://github.com/php-cache/mongodb-adapter
-[Predis]: https://github.com/php-cache/rredis-adapter
+[Predis]: https://github.com/php-cache/predis-adapter
 [Redis]: https://github.com/php-cache/redis-adapter
 [Taggable cache]: https://github.com/php-cache/taggable-cache
 [Void]: https://github.com/php-cache/void-adapter
