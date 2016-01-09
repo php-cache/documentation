@@ -45,9 +45,9 @@ There are plenty of adapters in this organisaion. Each of them lives in a differ
 Each adapter has it own features. The table below list all our adapters and their features. 
 
 
-| Adapter | Tagging | Hierarcy | Removes stalled |
-| ------- | ------- | -------- | --------------- |
-| Apc | Yes | No  | No
+| Adapter | Tagging | Hierarcy | Removes stalled | Badges |
+| ------- | ------- | -------- | --------------- | ------ |
+| [Apc] | Yes | No  | No
 | Apcu | Yes | No | No
 | Array | Yes | No | No
 | Couchbase (via Doctrine)| Yes | No | ??
@@ -75,3 +75,12 @@ We also have a chain adapter where you can chain multiple pool together. It is g
 There are have two Symfony bundles; [AdapterBundle](https://github.com/php-cache/adapter-bundle) and [CacheBundle](https://github.com/php-cache/cache-bundle). 
 
 The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  [CacheBundle](https://github.com/php-cache/cache-bundle) is used to integrate *any* PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
+
+
+[Apc]: https://github.com/php-cache/apc-adapter
+[Apc]: https://github.com/php-cache/apc-adapter
+[Apc]: https://github.com/php-cache/apc-adapter
+[Apc]: https://github.com/php-cache/apc-adapter
+[Apc]: https://github.com/php-cache/apc-adapter
+[Apc]: https://github.com/php-cache/apc-adapter
+[Apc]: https://github.com/php-cache/apc-adapter
