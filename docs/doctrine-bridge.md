@@ -2,7 +2,7 @@
 
 This library provides a PSR-6 compliant bridge between Doctrine and a Cache Pool. The bridge implements the 
 `Doctrine\Common\Cache\Cache` interface. This is useful for projects that require an implementation of 
-`Doctrine\Common\Cache\Cache`, but you still want to use a PSR-6 implementation. 
+`Doctrine\Common\Cache\Cache`, but when you still want to use a PSR-6 implementation. 
 
 ## Installation
 

@@ -4,11 +4,11 @@
 
 ## Usage
 
-To use an implementation of PSR-6 cache that also implement the `TaggablePoolInterface` do like the following code. 
+To use an implementation of PSR-6 cache that also implements the `TaggablePoolInterface` do like the following code. 
 We create three cache items and store them in the cache with different tags. The order of the tags does not matter. 
 
 ```php
-// $pool is an PSR-6 cache that implements TaggablePoolInterface
+// $pool is a PSR-6 cache that implements TaggablePoolInterface
 
 $item = $pool->getItem('tobias', ['developer', 'speaker']);
 $item->set('foobar');

@@ -1,6 +1,6 @@
 # Documentation for PHP Cache
 
-PHP Cahe is an organisation that thinks that cache should be PSR-6 and light weight. 
+PHP Cache is an organisation that thinks that cache should be PSR-6 and light weight. 
 
 ## Features
 
@@ -25,7 +25,7 @@ $pool->getItem('bow', ['london_districts'])->isHit(); // false
 
 #### Hierachy
 
-Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierachy cache key must start with pipe ("|").
+Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierachy cache key must start with a pipe ("|").
 
 
 ```php
@@ -37,7 +37,7 @@ $pool->hasItem('|users|4711|followers|12|likes'); // False
 ## Cache pool implementations
 There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple packages complies with the *Common resue principle* and makes it easier for the developer to follow the changes of a specific adapter. 
 
-Each adapter has it own features. The table below list all our adapters and their features. 
+Each adapter has it own features. The table below lists all our adapters and their features. 
 
 
 | Adapter | Tagging | Hierarcy | Removes stalled* | Badges |
@@ -62,7 +62,7 @@ Each adapter has it own features. The table below list all our adapters and thei
 | [Chain] | Yes | | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
 | [Doctrine] | Yes | No | Depends |  [![Latest Stable Version](https://poser.pugx.org/cache/doctrine-adapter/v/stable)](https://packagist.org/packages/cache/doctrine-adapter) [![Total Downloads](https://poser.pugx.org/cache/doctrine-adapter/downloads)](https://packagist.org/packages/cache/doctrine-adapter)
 
-\* *Tagging and hierachy store lots of extra items in cache that never are activly removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they stalled or not longer used. That is why tagging and hierarchy will work better on such cache storages.*
+\* *Tagging and hierachy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stalled or not longer used. That is why tagging and hierarchy will work better on such cache storages.*
   
 
 

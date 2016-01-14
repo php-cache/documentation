@@ -110,7 +110,7 @@ Here is the list of functions you need to change:
 
 ### Use TaggableItemInterface::getTaggedKey()
 
-To make sure we fetch the correct item the cache pool should always use `$item->getTaggedKey`. This will return a
+To make sure we fetch the correct item, the cache pool should always use `$item->getTaggedKey`. This will return a
 cache key that depends on the tags. 
 
 ```php

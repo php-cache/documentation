@@ -1,8 +1,8 @@
 # Hierarchical PSR-6 cache pool 
 
-This is a implementation for the PSR-6 for an hierarchical cache architecture. 
+This is an implementation for the PSR-6 for a hierarchical cache architecture. 
 
-If you have a cache key like `|users|:uid|followers|:fid|likes` where `:uid` and `:fid` are arbitrary integers. You
+If you have a cache key like `|users|:uid|followers|:fid|likes` where `:uid` and `:fid` are arbitrary integers, you
  may flush all followers by flushing `|users|:uid|followers`.
  
 ```php
