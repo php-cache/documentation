@@ -3,8 +3,8 @@
 *Note: Performance will be best with a driver such as memcached or redis, which automatically purges stale records.*
 
 The trait for hierarchy pools creates a form of tag for each level in the hierarchy. That means that for every *input 
-key* there are multiple *path keys*. The *path keys* are used to fetch a path value in the storage wich is used to 
-create a storage key for the `CacheItem`. The idea is complex but it is easy to use. Consider this example: 
+key* there are multiple *path keys*. The *path keys* are used to fetch a path value in the storage which is used to 
+create a storage key for the `CacheItem`. The idea is complex, but easy to use. Consider this example: 
 
 ```php
 // Input key is form the user
@@ -19,7 +19,7 @@ $this->storage->set($storageKey, $item);
 To clear the input key `|foo` you need to update `foo_idx` simply by increasing the value by one. The implementation
 becomes a bit more complex when you add support for tags but luckily there is a trait to help you with this. 
 
-To implement hierarchy cache there are four things you need to do: 
+To implement hierarchy cache, there are four things you need to do: 
 
 * Implement `HierarchicalPoolInterface` and use `HierarchicalCachePoolTrait`
 * Use `HierarchicalCachePoolTrait::getHierarchyKey($key)`
@@ -27,7 +27,7 @@ To implement hierarchy cache there are four things you need to do:
 * Implement `HierarchicalCachePoolTrait::getValueFormStore($key)`
 
 
-## Implmenent the interface and use the trait
+## Implement the interface and use the trait
  
 The trait has two protected functions `getHierarchyKey($inputKey)` and `clearHierarchyKeyCache()` and one abstract
  function `getValueFormStore($key)`. We will talk about those later. 
@@ -72,7 +72,7 @@ You should do this for the followong functions:
 # Delete items better
 
 When you are clearing the cache there are quite a few things to think about. You need to update the stored value for 
-the path key and also clear the local hierarcy cache key storage. To get a path key you can use the second argument of
+the path key and also clear the local hierarchy cache key storage. To get a path key you can use the second argument of
 `HierarchicalCachePoolTrait::getHierarchyKey($inputKey, $pathKey)` that is passed by reference. 
 
 ```php
@@ -97,8 +97,8 @@ public function deleteItem($key)
 
 ## Implement getValueFormStore($key)
 
-The trait has one abstract function `HierarchicalCachePoolTrait::getValueFormStore($key)` wich is used to get the 
-value for a path key. This functions should just feth data from the storage without modifications. 
+The trait has one abstract function `HierarchicalCachePoolTrait::getValueFormStore($key)` which is used to get the 
+value for a path key. This function should just fetch data from the storage without modifications. 
 
 ```php
  protected function getValueFormStore($key)

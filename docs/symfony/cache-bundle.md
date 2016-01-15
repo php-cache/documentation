@@ -3,7 +3,7 @@
 #### Cache Bundle for Symfony 2.6 and above
 
 This is a Symfony bundle that lets you you integrate your PSR-6 compliant cache service with the framework. 
-It lets you cache your sessions, routes and Doctrine results and metadata. It also provides an integration with the 
+It lets you cache your sessions, routes, Doctrine results and metadata. It also provides an integration with the 
 debug toolbar. 
 
 
@@ -15,7 +15,7 @@ debug toolbar.
 
 ### To Install
 
-You need to install and enable this bundle and also a PSR-6 cache implementation. In the example below we use the
+You need to install and enable this bundle and also a PSR-6 cache implementation. In the example below we'll use the
 [DoctrineAdapterBundle].
 
 Run the following in your project root, assuming you have composer set up for your project
@@ -40,7 +40,7 @@ To see all the config options, run `php app/console config:dump-reference cache`
 #### A word on the cache implementation
 
 This bundle does not register any cache services for you. This is done by [DoctrineAdapterBundle] you should look 
-at its documentation to see how you configure that bundle. Below in an example configuration:
+at its documentation to see how you configure that bundle. Below is an example configuration:
 
 ```yml
 cache_adapter_doctrine:
@@ -57,7 +57,7 @@ cache_adapter_doctrine:
 
 #### Doctrine
 
-This bundle allows you to use its services for Doctrine's caching methods of metadata, result, and query. To use this 
+This bundle allows you to use its services for Doctrine's caching methods of metadata, result and query. To use this 
 feature you need to install the [DoctrineBridge]. 
 
 ```sh
@@ -122,13 +122,13 @@ tagging (implements [TaggablePoolInterface](https://github.com/php-cache/taggabl
 you can clear the cache tagged with `routing`.
 
 The routing cache will make the route lookup more performant when your application have many routes, especially many 
-dynamic routes. If you just have a few routes your performance will actually be worse enabling this. 
+dynamic routes. If you just have a few routes your performance will actually be worse by enabling this. 
 Use [Blackfire](https://blackfire.io/) to profile your application to see if you should enable routing cache or not. 
 
 
 #### Logging
 
-If you want to log all the interaction with the cache you may do so with the following configuration.
+If you want to log all the interaction with the cache, you may do so with the following configuration.
 
 ```yml
 cache:
@@ -200,7 +200,7 @@ echo "Run the following command to see all your options:"
 php app/console cache:flush help
 ```
 
-*Caution: If you are using a implementation that does not support tagging you will clear all with any of the above commands.*
+*Caution: If you are using an implementation that does not support tagging you will clear all with any of the above commands.*
 
 ### Need Help?
 
