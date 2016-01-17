@@ -1,6 +1,6 @@
 # Documentation for PHP Cache
 
-PHP Cache is an organisation that thinks that cache should be PSR-6 and light weight. 
+PHP Cache is an organisation that thinks that cache should be PSR-6 and lightweight. 
 
 ## Features
 
@@ -23,9 +23,9 @@ $pool->getItem('bow', ['weapons'])->isHit(); // true
 $pool->getItem('bow', ['london_districts'])->isHit(); // false
 ```
 
-#### Hierachy
+#### Hierarchy
 
-Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierachy cache key must start with a pipe ("|").
+Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierarchical cache key must start with a pipe ("|").
 
 
 ```php
@@ -35,7 +35,8 @@ $pool->hasItem('|users|4711|followers|12|likes'); // False
 ```
 
 ## Cache pool implementations
-There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple packages complies with the *Common resue principle* and makes it easier for the developer to follow the changes of a specific adapter. 
+
+There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple packages complies with the *Common reuse principle* and makes it easier for the developer to follow the changes of a specific adapter. 
 
 Each adapter has it own features. The table below lists all our adapters and their features. 
 
@@ -62,7 +63,7 @@ Each adapter has it own features. The table below lists all our adapters and the
 | [Chain] | Yes | | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
 | [Doctrine] | Yes | No | Depends |  [![Latest Stable Version](https://poser.pugx.org/cache/doctrine-adapter/v/stable)](https://packagist.org/packages/cache/doctrine-adapter) [![Total Downloads](https://poser.pugx.org/cache/doctrine-adapter/downloads)](https://packagist.org/packages/cache/doctrine-adapter)
 
-\* *Tagging and hierachy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stalled or not longer used. That is why tagging and hierarchy will work better on such cache storages.*
+\* *Tagging and hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stalled or not longer used. That is why tagging and hierarchy will work better on such cache storages.*
   
 
 
@@ -84,7 +85,7 @@ The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symf
 
 ## Organisation overview
 
-Except for our apdaters we have the following packages
+Except for our adapters we have the following packages
 
 | Name | Description | Badges |
 | ---- | ----------- | ------ |
@@ -92,9 +93,9 @@ Except for our apdaters we have the following packages
 | [Adapter common] | The `AbstractCachePool` and `CacheItem` live here. | [![Latest Stable Version](https://poser.pugx.org/cache/adapter-common/v/stable)](https://packagist.org/packages/cache/adapter-common) [![Total Downloads](https://poser.pugx.org/cache/adapter-common/downloads)](https://packagist.org/packages/cache/adapter-common)
 | [CacheBundle] | Bundle to integrate **any** PSR-6 service with the<br>Symfony framework. | [![Latest Stable Version](https://poser.pugx.org/cache/cache-bundle/v/stable)](https://packagist.org/packages/cache/cache-bundle) [![Total Downloads](https://poser.pugx.org/cache/cache-bundle/downloads)](https://packagist.org/packages/cache/cache-bundle)
 | [Doctrine bride] | A bridge from PSR-6 to DoctrineCache | [![Latest Stable Version](https://poser.pugx.org/cache/psr-6-doctrine-bridge/v/stable)](https://packagist.org/packages/cache/psr-6-doctrine-bridge) [![Total Downloads](https://poser.pugx.org/cache/psr-6-doctrine-bridge/downloads)](https://packagist.org/packages/cache/psr-6-doctrine-bridge)
-| [Hieracrchial cache] | A trait and interface to support cache hierachy | [![Latest Stable Version](https://poser.pugx.org/cache/hierarchical-cache/v/stable)](https://packagist.org/packages/cache/hierarchical-cache) [![Total Downloads](https://poser.pugx.org/cache/hierarchical-cache/downloads)](https://packagist.org/packages/cache/hierarchical-cache)
+| [Hierarchical cache] | A trait and interface to support cache hierachy | [![Latest Stable Version](https://poser.pugx.org/cache/hierarchical-cache/v/stable)](https://packagist.org/packages/cache/hierarchical-cache) [![Total Downloads](https://poser.pugx.org/cache/hierarchical-cache/downloads)](https://packagist.org/packages/cache/hierarchical-cache)
 | [Integration tests] | Used to verify **any** PSR-6 implementation | [![Latest Stable Version](https://poser.pugx.org/cache/integration-tests/v/stable)](https://packagist.org/packages/cache/integration-tests) [![Total Downloads](https://poser.pugx.org/cache/integration-tests/downloads)](https://packagist.org/packages/cache/integration-tests)
-| [Taggable cache] | Tratis and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
+| [Taggable cache] | Traits and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
 
 [AdapterBundle]: https://github.com/php-cache/adapter-bundle
 [Adapter common]: https://github.com/php-cache/adapter-common
@@ -106,7 +107,7 @@ Except for our apdaters we have the following packages
 [Doctrine]: https://github.com/php-cache/doctrine-adapter
 [Doctrine bride]: https://github.com/php-cache/doctrine-bridge
 [Filesystem]: https://github.com/php-cache/filesystem-adapter
-[Hieracrchial cache]: https://github.com/php-cache/hierarchical-cache
+[Hierarchical cache]: https://github.com/php-cache/hierarchical-cache
 [Integration tests]: https://github.com/php-cache/integration-tests
 [Memcache]: https://github.com/php-cache/memcache-adapter
 [Memcached]: https://github.com/php-cache/memcached-adapter
@@ -115,7 +116,4 @@ Except for our apdaters we have the following packages
 [Redis]: https://github.com/php-cache/redis-adapter
 [Taggable cache]: https://github.com/php-cache/taggable-cache
 [Void]: https://github.com/php-cache/void-adapter
-
-
 [Flysystem]: http://flysystem.thephpleague.com/
-
