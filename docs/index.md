@@ -97,6 +97,12 @@ Except for our adapters we have the following packages
 | [Integration tests] | Used to verify **any** PSR-6 implementation | [![Latest Stable Version](https://poser.pugx.org/cache/integration-tests/v/stable)](https://packagist.org/packages/cache/integration-tests) [![Total Downloads](https://poser.pugx.org/cache/integration-tests/downloads)](https://packagist.org/packages/cache/integration-tests)
 | [Taggable cache] | Traits and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
 
+## Contact
+
+[![Slack Status](http://slack.php-cache.com/badge.svg)](http://slack.php-cache.com)
+
+We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.com/aequasi) and [@tobiasnyholm](https://twitter.com/tobiasnyholm). You could also join us on [Slack](http://slack.php-cache.com).
+
 [AdapterBundle]: https://github.com/php-cache/adapter-bundle
 [Adapter common]: https://github.com/php-cache/adapter-common
 [Apc]: https://github.com/php-cache/apc-adapter
