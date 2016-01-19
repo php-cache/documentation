@@ -1,6 +1,6 @@
 # PHP-Cache Documentation
 
-[![Documentation Status](https://readthedocs.org/projects/php-cache/badge/?version=latest)](http://www.php-cache.com/en/latest/?badge=latest) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![Documentation Status](https://readthedocs.org/projects/php-cache/badge/?version=latest)](http://www.php-cache.com/en/latest/?badge=latest) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE) [![Slack Status](http://slack.php-cache.com/badge.svg)](http://slack.php-cache.com)
 
 
 **This is the documentation repository of the PHP-Cache software components**
