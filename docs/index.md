@@ -63,7 +63,7 @@ Each adapter has it own features. The table below lists all our adapters and the
 | [Chain] | Yes | | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
 | [Doctrine] | Yes | No | Depends |  [![Latest Stable Version](https://poser.pugx.org/cache/doctrine-adapter/v/stable)](https://packagist.org/packages/cache/doctrine-adapter) [![Total Downloads](https://poser.pugx.org/cache/doctrine-adapter/downloads)](https://packagist.org/packages/cache/doctrine-adapter)
 
-\* *Tagging and hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stale or not longer used. That is why tagging and hierarchy will work better on such cache storages.*
+\* *Tagging and hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stale or no longer used. That is why tagging and hierarchy will work better on such cache storages.*
   
 
 
