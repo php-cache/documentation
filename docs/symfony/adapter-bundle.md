@@ -1,10 +1,11 @@
 # Adapter Bundle
 
-This bundle helps you configurate and register PSR-6 cache services. 
+This bundle helps you configure and register PSR-6 cache services. 
 
 ### To Install
 
 Run the following in your project root, assuming you have composer set up for your project
+
 ```sh
 composer require cache/adapter-bundle
 ```
@@ -50,7 +51,7 @@ Use the new service as any PSR-6 cache.
 /** @var CacheItemPoolInterface $cache */
 $cache = $this->container->get('cache.provider.acme_redis');
 // Or
-$cache = $this->container->get('cache'); // This is either the `default` provider, or the first provider in the config
+$cache = $this->container->get('cache'); // This is either the default provider, or the first provider in the config
 
 /** @var CacheItemInterface $item */
 $item = $cache->getItem('cache-key');

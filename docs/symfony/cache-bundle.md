@@ -16,11 +16,11 @@ debug toolbar.
 ### To Install
 
 You need to install and enable this bundle and also a PSR-6 cache implementation. In the example below we'll use the
-[DoctrineAdapterBundle].
+[CacheAdapterBundle].
 
 Run the following in your project root, assuming you have composer set up for your project
 ```sh
-composer require cache/cache-bundle cache/doctrine-adapter-bundle
+composer require cache/cache-bundle cache/cache-adapter-bundle
 ```
 
 Add the bundles to app/AppKernel.php
@@ -29,7 +29,7 @@ Add the bundles to app/AppKernel.php
 $bundles(
     // ...
     new Cache\CacheBundle\CacheBundle(),
-    new Cache\Adapter\DoctrineAdapterBundle\DoctrineAdapterBundle(),
+    new Cache\AdapterBundle\CacheAdapterBundle()
     // ...
 );
 ```
@@ -39,18 +39,19 @@ To see all the config options, run `php app/console config:dump-reference cache`
 
 #### A word on the cache implementation
 
-This bundle does not register any cache services for you. This is done by [DoctrineAdapterBundle] you should look 
+This bundle does not register any cache services for you. This is done by [CacheAdapterBundle] you should look 
 at its documentation to see how you configure that bundle. Below is an example configuration:
 
 ```yml
-cache_adapter_doctrine:
+cache_adapter:
   providers:
-    acme_redis_cache:
-      type: redis
-      database: 'foo'
-    acme_apc_cache:
-      type: apc
-      namespace: my_ns
+    acme_memcached:
+      factory: cache.factory.memcached
+      options: 
+        persistent: true # Boolean or persistent_id
+        namespace: mc
+        hosts:
+          - { host: localhost, port: 11211 }      
 ```
 
 ### Configuration
@@ -207,5 +208,5 @@ php app/console cache:flush help
 Create an issue if you've found a bug, or ping one of us on twitter: @aequasi or @TobiasNyholm
 
 
-[DoctrineAdapterBundle]:https://github.com/php-cache/doctrine-adapter-bundle
+[CacheAdapterBundle]:https://github.com/php-cache/cache-adapter-bundle
 [DoctrineBridge]:https://github.com/php-cache/doctrine-bridge

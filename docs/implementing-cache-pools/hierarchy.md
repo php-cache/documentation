@@ -1,6 +1,6 @@
 # Hierarchical PSR-6 cache pool 
 
-*Note: Performance will be best with a driver such as memcached or redis, which automatically purges stale records.*
+*Note: You will find the best performance when using a driver that automatically purges stale records. e.g. Memcache(d) or Redis*
 
 The trait for hierarchy pools creates a form of tag for each level in the hierarchy. That means that for every *input 
 key* there are multiple *path keys*. The *path keys* are used to fetch a path value in the storage which is used to 
@@ -59,7 +59,7 @@ public function getItem($key)
 }
 ```
 
-You should do this for the followong functions: 
+You should do this for the following functions: 
 
 * getItem
 * getItems

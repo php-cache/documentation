@@ -1,10 +1,10 @@
 # Implement cache tags
 
-*Note: Performance will be best with a driver such as memcached or redis, which automatically purges stale records.*
+*Note: You will find the best performance when using a driver that automatically purges stale records. e.g. Memcache(d) or Redis*
 
 ## Usage
 
-To use an implementation of PSR-6 cache that also implements the `TaggablePoolInterface` do like the following code. 
+To use Tagging with your project, use a pool that implements the `TaggablePoolInterface`, and follow the code examples below.
 We create three cache items and store them in the cache with different tags. The order of the tags does not matter. 
 
 ```php
@@ -33,7 +33,7 @@ $pool->getItem('tobias', ['king'])->isHit(); // false
 $pool->getItem('tobias')->isHit(); // false
 ```
 
-To clear the cache you may do like this: 
+You can clear the cache like so:
 
 ```php
 
@@ -43,6 +43,6 @@ $pool->getItem('tobias', ['developer', 'speaker'])->isHit(); // true
 $pool->getItem('aaron', ['developer', 'nice guy'])->isHit(); // false
 $pool->getItem('the king of Sweden', ['nice guy', 'king'])->isHit(); // false
 
-// To clear everything you do as you usually do
+// To clear everything
 $pool->clear();
 ```

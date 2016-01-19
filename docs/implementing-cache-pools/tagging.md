@@ -1,6 +1,6 @@
 # Use cache tags
 
-*Note: Performance will be best with a driver such as memcached or redis, which automatically purges stale records.*
+*Note: You will find the best performance when using a driver that automatically purges stale records. e.g. Memcache(d) or Redis*
 
 ## Implementation
 
@@ -60,7 +60,7 @@ class Pool implements CacheItemInterface, TaggableItemInterface
 
 ### Generate cache key
 
-Your cache pool's `getItem()` probably look like this: 
+Your cache pool's `getItem()` probably looks like this: 
 ```php
 public function getItem($key)
 {

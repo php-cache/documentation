@@ -41,7 +41,7 @@ There are plenty of adapters in this organisaion. Each of them lives in a differ
 Each adapter has it own features. The table below lists all our adapters and their features. 
 
 
-| Adapter | Tagging | Hierarcy | Removes stalled* | Badges |
+| Adapter | Tagging | Hierarcy | Removes stale* | Badges |
 | ------- | ------- | -------- | --------------- | ------ |
 | [Apc] | Yes | No  | No | [![Latest Stable Version](https://poser.pugx.org/cache/apc-adapter/v/stable)](https://packagist.org/packages/cache/apc-adapter) [![Total Downloads](https://poser.pugx.org/cache/apc-adapter/downloads)](https://packagist.org/packages/cache/apc-adapter)
 | [Apcu] | Yes | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/apcu-adapter/v/stable)](https://packagist.org/packages/cache/apcu-adapter) [![Total Downloads](https://poser.pugx.org/cache/apcu-adapter/downloads)](https://packagist.org/packages/cache/apcu-adapter)
@@ -63,13 +63,13 @@ Each adapter has it own features. The table below lists all our adapters and the
 | [Chain] | Yes | | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
 | [Doctrine] | Yes | No | Depends |  [![Latest Stable Version](https://poser.pugx.org/cache/doctrine-adapter/v/stable)](https://packagist.org/packages/cache/doctrine-adapter) [![Total Downloads](https://poser.pugx.org/cache/doctrine-adapter/downloads)](https://packagist.org/packages/cache/doctrine-adapter)
 
-\* *Tagging and hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stalled or not longer used. That is why tagging and hierarchy will work better on such cache storages.*
+\* *Tagging and hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stale or not longer used. That is why tagging and hierarchy will work better on such cache storages.*
   
 
 
 #### Chain adapter
 
-We also have a chain adapter where you can chain multiple pool together. It is great if you got a fast storage with limited memory and a slower storage with loads of memory. 
+We also have a chain adapter where you can chain multiple pool together. It is great if you have a fast storage with limited memory and a slower storage with loads of memory. 
 
 ### Doctrine adapter
 
@@ -85,7 +85,7 @@ The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symf
 
 ## Organisation overview
 
-Except for our adapters we have the following packages
+Excluding our adapters, we have the following packages
 
 | Name | Description | Badges |
 | ---- | ----------- | ------ |
