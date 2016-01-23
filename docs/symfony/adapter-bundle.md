@@ -34,18 +34,18 @@ cache_adapter:
 
 The factories that come with this bundle can be found in the table below. 
 
-| Factory service | Options | 
-| --------------- | ------- |
-| cache.factory.apc | No options available |
-| cache.factory.apcu | No options available |
-| cache.factory.array | No options available |
+| Factory service id | Options | 
+| ------------------ | ------- |
+| cache.factory.apc |  |
+| cache.factory.apcu |  |
+| cache.factory.array |  |
 | cache.factory.filesystem | `flysystem_service` |
 | cache.factory.memcached | `host`, `port` |
 | cache.factory.memcache | `host`, `port` |
 | cache.factory.mongodb | `host`, `port`, `namespace` |
 | cache.factory.predis | `host`, `port`, `schema` |
 | cache.factory.redis | `host`, `port`, `namespace` |
-| cache.factory.void | No options available |
+| cache.factory.void |  |
 | | |
 | cache.factory.doctrine_couchbase | `host`, `user`, `password`, `bucket` |
 | cache.factory.doctrine_filesystem | `directory`, `extension`, `umask` |
@@ -56,9 +56,9 @@ The factories that come with this bundle can be found in the table below.
 | cache.factory.doctrine_redis | `host`, `port` |
 | cache.factory.doctrine_riak | `host`, `port`, `type` |
 | cache.factory.doctrine_sqlite3 | `file_path`, `table` |
-| cache.factory.doctrine_wincache | No options available |
-| cache.factory.doctrine_xcache | No options available |
-| cache.factory.doctrine_zenddata | No options available |
+| cache.factory.doctrine_wincache |  |
+| cache.factory.doctrine_xcache |  |
+| cache.factory.doctrine_zenddata |  |
 
 
 ### Example configuration
@@ -69,7 +69,7 @@ cache_adapter:
     my_redis:
       factory: 'cache.factory.redis'
       options: 
-        host: 10.0.0.15 // Using custom host
+        host: 10.0.0.15 # Using custom host
         port: 6379
     my_memcached:
       factory: 'cache.factory.memcached'
