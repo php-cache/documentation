@@ -75,6 +75,21 @@ We also have a chain adapter where you can chain multiple pool together. It is g
 
 The doctrine adapter is a PSR-6 adapter that wraps a `Doctrine\Common\Cache\Cache` object. With this adapter you can use storages like Riak and WinCache which currently do not have any PHP Cache adapters. 
 
+## Installation
+
+Use composer to install any of the adapters above. Some adapters may require configuration before they can be used. 
+Refer to the adapter's Github page to see how they are configured. You could also use the Symfony [AdapterBundle] to 
+configure the adapters. 
+
+```bash
+composer require cache/[any]-adapter
+```
+
+### Requirements
+
+Unless other is specified, all adapters support PHP version `~5.5` and `~7.0.0`. Most adapters do also have requirements
+on PHP extension. Like the Redis adapter requires `ext-redis`. 
+
 ## Framework integration
 
 #### Symfony

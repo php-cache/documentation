@@ -14,11 +14,11 @@ $item = $pool->getItem('tobias', ['developer', 'speaker']);
 $item->set('foobar');
 $pool->save($item);
 
-$item = $pool->getItem('aaron', ['developer', 'nice guy']);
+$item = $pool->getItem('aaron', ['developer', 'awesome']);
 $item->set('foobar');
 $pool->save($item);
 
-$item = $pool->getItem('the king of Sweden', ['nice guy', 'king']);
+$item = $pool->getItem('the_king_of_Sweden', ['awesome', 'king']);
 $item->set('foobar');
 $pool->save($item);
 ```
@@ -37,12 +37,38 @@ You can clear the cache like so:
 
 ```php
 
-// Remove everything tagged with 'nice guy'
-$pool->clear(['nice guy']);
+// Remove everything tagged with 'awesome'
+$pool->clear(['awesome']);
 $pool->getItem('tobias', ['developer', 'speaker'])->isHit(); // true
-$pool->getItem('aaron', ['developer', 'nice guy'])->isHit(); // false
-$pool->getItem('the king of Sweden', ['nice guy', 'king'])->isHit(); // false
+$pool->getItem('aaron', ['developer', 'awesome'])->isHit(); // false
+$pool->getItem('the_king_of_Sweden', ['awesome', 'king'])->isHit(); // false
 
 // To clear everything
 $pool->clear();
 ```
+
+## Implemantation notes
+
+There is a rare case where you might find issues with this implementation. Some tags cached in memory for performance, 
+this might lead to uncleared cache if you have long running request. The following example will show the issue. 
+
+```php
+// Request A, T: 0
+$item = $pool->getItem('key', ['tag']);
+$item->set('value');
+$pool->save($item);
+$pool->isHit('key', ['tag']); // true
+
+// Request B, T: 1
+$pool->clear(['tag']);
+$pool->isHit('key', ['tag']); // false
+
+// Request C, T: 2
+$pool->isHit('key', ['tag']); // false
+
+// Request A, T: 2
+$pool->isHit('key', ['tag']); // true
+```
+
+If request A is a background task that you are running for hours/days then you have a problem that the cache tag never
+will be cleared. 

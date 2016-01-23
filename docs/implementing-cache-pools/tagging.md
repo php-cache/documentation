@@ -16,6 +16,10 @@ You need to do a few changes on the implementation of `CacheItemPoolInterface`.
 * Implement `CachePool::getItemWithoutGenerateCacheKey($key)`
 * Implement `CachePool::validateTagName($key)`
 
+The `TaggablePoolTrait` uses exclamation mark (!) internally to be able to support tagging. Becasue exclamation is 
+not a supported PSR-6 cache key chars we will not fear that the user accidently writes to a tag key but you have to 
+make sure that the storage supports this character. 
+
 
 ### Implement interface and use trait for CacheItemPoolInterface
 
@@ -224,4 +228,4 @@ automatically purges stale records.
 ## Test your tagging cache
 
 When you are happy with your implementation you should test it. We have provided some integration tests that will test
-your implementation for you. See this repository for more info: https://github.com/php-cache/integration-tests 
+your implementation for you. See the [related documentation](integration-tests.md).
