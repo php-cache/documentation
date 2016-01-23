@@ -110,6 +110,7 @@ Excluding our adapters, we have the following packages
 | [Doctrine bride] | A bridge from PSR-6 to DoctrineCache | [![Latest Stable Version](https://poser.pugx.org/cache/psr-6-doctrine-bridge/v/stable)](https://packagist.org/packages/cache/psr-6-doctrine-bridge) [![Total Downloads](https://poser.pugx.org/cache/psr-6-doctrine-bridge/downloads)](https://packagist.org/packages/cache/psr-6-doctrine-bridge)
 | [Hierarchical cache] | A trait and interface to support cache hierachy | [![Latest Stable Version](https://poser.pugx.org/cache/hierarchical-cache/v/stable)](https://packagist.org/packages/cache/hierarchical-cache) [![Total Downloads](https://poser.pugx.org/cache/hierarchical-cache/downloads)](https://packagist.org/packages/cache/hierarchical-cache)
 | [Integration tests] | Used to verify **any** PSR-6 implementation | [![Latest Stable Version](https://poser.pugx.org/cache/integration-tests/v/stable)](https://packagist.org/packages/cache/integration-tests) [![Total Downloads](https://poser.pugx.org/cache/integration-tests/downloads)](https://packagist.org/packages/cache/integration-tests)
+| [Session handler] | Implementation of `\SessionHandlerInterface` | [![Latest Stable Version](https://poser.pugx.org/cache/session-handler/v/stable)](https://packagist.org/packages/cache/session-handler) [![Total Downloads](https://poser.pugx.org/cache/session-handler/downloads)](https://packagist.org/packages/cache/session-handler)
 | [Taggable cache] | Traits and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
 
 ## Contact
@@ -135,6 +136,7 @@ We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.co
 [MongoDB]: https://github.com/php-cache/mongodb-adapter
 [Predis]: https://github.com/php-cache/predis-adapter
 [Redis]: https://github.com/php-cache/redis-adapter
+[Session handler]: https://github.com/php-cache/session-handler
 [Taggable cache]: https://github.com/php-cache/taggable-cache
 [Void]: https://github.com/php-cache/void-adapter
 [Flysystem]: http://flysystem.thephpleague.com/
