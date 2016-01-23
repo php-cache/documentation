@@ -14,11 +14,11 @@ $item = $pool->getItem('tobias', ['developer', 'speaker']);
 $item->set('foobar');
 $pool->save($item);
 
-$item = $pool->getItem('aaron', ['developer', 'nice guy']);
+$item = $pool->getItem('aaron', ['developer', 'awesome']);
 $item->set('foobar');
 $pool->save($item);
 
-$item = $pool->getItem('the king of Sweden', ['nice guy', 'king']);
+$item = $pool->getItem('the_king_of_Sweden', ['awesome', 'king']);
 $item->set('foobar');
 $pool->save($item);
 ```
@@ -37,11 +37,11 @@ You can clear the cache like so:
 
 ```php
 
-// Remove everything tagged with 'nice guy'
-$pool->clear(['nice guy']);
+// Remove everything tagged with 'awesome'
+$pool->clear(['awesome']);
 $pool->getItem('tobias', ['developer', 'speaker'])->isHit(); // true
-$pool->getItem('aaron', ['developer', 'nice guy'])->isHit(); // false
-$pool->getItem('the king of Sweden', ['nice guy', 'king'])->isHit(); // false
+$pool->getItem('aaron', ['developer', 'awesome'])->isHit(); // false
+$pool->getItem('the_king_of_Sweden', ['awesome', 'king'])->isHit(); // false
 
 // To clear everything
 $pool->clear();
