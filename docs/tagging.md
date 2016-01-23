@@ -46,3 +46,29 @@ $pool->getItem('the_king_of_Sweden', ['awesome', 'king'])->isHit(); // false
 // To clear everything
 $pool->clear();
 ```
+
+## Implemantation notes
+
+There is a rare case where you might find issues with this implementation. Some tags cached in memory for performance, 
+this might lead to uncleared cache if you have long running request. The following example will show the issue. 
+
+```php
+// Request A, T: 0
+$item = $pool->getItem('key', ['tag']);
+$item->set('value');
+$pool->save($item);
+$pool->isHit('key', ['tag']); // true
+
+// Request B, T: 1
+$pool->clear(['tag']);
+$pool->isHit('key', ['tag']); // false
+
+// Request C, T: 2
+$pool->isHit('key', ['tag']); // false
+
+// Request A, T: 2
+$pool->isHit('key', ['tag']); // true
+```
+
+If request A is a background task that you are running for hours/days then you have a problem that the cache tag never
+will be cleared. 
