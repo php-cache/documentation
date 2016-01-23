@@ -41,7 +41,7 @@ composer require cache/psr-6-doctrine-bridge
 
 If you want Doctrine to use this as the result and query cache, you need this configuration: 
 
-```yml
+```yaml
 cache:
   doctrine:
     enabled: true
