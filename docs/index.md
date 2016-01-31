@@ -115,9 +115,9 @@ Excluding our adapters, we have the following packages
 
 ## Contact
 
-[![Slack Status](http://slack.php-cache.com/badge.svg)](http://slack.php-cache.com)
+[![Gitter](https://badges.gitter.im/php-cache/cache.svg)](https://gitter.im/php-cache/cache) 
 
-We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.com/aequasi) and [@tobiasnyholm](https://twitter.com/tobiasnyholm). You could also join us on [Slack](http://slack.php-cache.com).
+We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.com/aequasi) and [@tobiasnyholm](https://twitter.com/tobiasnyholm). You could also join us on [Gitter](https://gitter.im/php-cache/cache).
 
 [AdapterBundle]: https://github.com/php-cache/adapter-bundle
 [Adapter common]: https://github.com/php-cache/adapter-common
