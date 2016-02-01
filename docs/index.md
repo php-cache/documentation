@@ -105,7 +105,7 @@ $pool->hasItem('|users|4711|followers|12|likes'); // False
 
 #### Symfony
 
-There are have two Symfony bundles; [AdapterBundle] and [CacheBundle]. 
+There are two Symfony bundles; [AdapterBundle] and [CacheBundle]. 
 
 The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  CacheBundle is used to integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
 
