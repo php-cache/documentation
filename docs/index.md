@@ -1,4 +1,7 @@
-# PHP Cache
+# PHP Cache 
+
+<img align="right" src="https://raw.githubusercontent.com/php-cache/documentation/master/logos/php-cache-logo-256.png" />
+
 
 The PHP Cache organization is dedicated to providing solid, powerful, flexible, and lightweight caching libraries for PHP projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) compliant. If you are a library implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) to help you meet the PSR-6 specification.
 
