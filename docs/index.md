@@ -1,38 +1,8 @@
-# Documentation for PHP Cache
+# PHP Cache
 
-PHP Cache is an organisation that thinks that cache should be PSR-6 and lightweight. 
+The PHP Cache organization is dedicated to providing solid, powerful, flexible, and lightweight caching libraries for PHP projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) compliant. If you are a library implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) to help you meet the PSR-6 specification.
 
-## Features
-
-#### Tagging
-
-Tags can be used to separate the storage of different systems in the cache. This allows different sections to be cleared on an individual level, while also preventing overlapping keys.
-
-```php
-$item = $pool->getItem('bow', ['weapons'])->set('weapon_value');
-$pool->save($item);
-
-$item = $pool->getItem('bow', ['london_districts'])->set('london_value');
-$pool->save($item);
-
-$pool->getItem('bow', ['weapons'])->isHit(); // true
-$pool->getItem('bow', ['london_districts'])->isHit(); // true
-
-$pool->clear(['london_districts']);
-$pool->getItem('bow', ['weapons'])->isHit(); // true
-$pool->getItem('bow', ['london_districts'])->isHit(); // false
-```
-
-#### Hierarchy
-
-Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierarchical cache key must start with a pipe ("|").
-
-
-```php
-$pool->hasItem('|users|4711|followers|12|likes'); // True
-$pool->deleteItem('|users|4711|followers');
-$pool->hasItem('|users|4711|followers|12|likes'); // False
-```
+Below you will find information about what features our libraries offer, and what adapters we have. You can also find out framework integration libraries.
 
 ## Cache pool implementations
 
@@ -85,10 +55,48 @@ configure the adapters.
 composer require cache/[any]-adapter
 ```
 
+You can also install all of the adapters with the `cache/cache`
+
+```bash
+composer require cache/cache
+```
+
 ### Requirements
 
-Unless other is specified, all adapters support PHP version `~5.5` and `~7.0.0`. Most adapters do also have requirements
+Unless other is specified, all adapters support PHP version `^5.5` and `^7.0`. Most adapters do also have requirements
 on PHP extension. Like the Redis adapter requires `ext-redis`. 
+
+## Features
+
+#### Tagging
+
+Tags can be used to separate the storage of different systems in the cache. This allows different sections to be cleared on an individual level, while also preventing overlapping keys.
+
+```php
+$item = $pool->getItem('bow', ['weapons'])->set('weapon_value');
+$pool->save($item);
+
+$item = $pool->getItem('bow', ['london_districts'])->set('london_value');
+$pool->save($item);
+
+$pool->getItem('bow', ['weapons'])->isHit(); // true
+$pool->getItem('bow', ['london_districts'])->isHit(); // true
+
+$pool->clear(['london_districts']);
+$pool->getItem('bow', ['weapons'])->isHit(); // true
+$pool->getItem('bow', ['london_districts'])->isHit(); // false
+```
+
+#### Hierarchy
+
+Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierarchical cache key must start with a pipe ("|").
+
+
+```php
+$pool->hasItem('|users|4711|followers|12|likes'); // True
+$pool->deleteItem('|users|4711|followers');
+$pool->hasItem('|users|4711|followers|12|likes'); // False
+```
 
 ## Framework integration
 
@@ -98,12 +106,15 @@ There are have two Symfony bundles; [AdapterBundle] and [CacheBundle].
 
 The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  CacheBundle is used to integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
 
+We would LOVE to see integration with Zend, Laravel, Yii, Cake, and even Code Igniter. If you would like to contribute, we would love to see your code.
+
 ## Organisation overview
 
 Excluding our adapters, we have the following packages
 
 | Name | Description | Badges |
 | ---- | ----------- | ------ |
+| [Cache] | Base Cache Repository. Contains all adapters. | [![Latest Stable Version](https://poser.pugx.org/cache/cache/v/stable)](https://packagist.org/packages/cache/cache) [![Total Downloads](https://poser.pugx.org/cache/cache/downloads)](https://packagist.org/packages/cache/cache)
 | [AdapterBundle] | Bundle to register adapters to services. | [![Latest Stable Version](https://poser.pugx.org/cache/adapter-bundle/v/stable)](https://packagist.org/packages/cache/adapter-bundle) [![Total Downloads](https://poser.pugx.org/cache/adapter-bundle/downloads)](https://packagist.org/packages/cache/adapter-bundle)
 | [Adapter common] | The `AbstractCachePool` and `CacheItem` live here. | [![Latest Stable Version](https://poser.pugx.org/cache/adapter-common/v/stable)](https://packagist.org/packages/cache/adapter-common) [![Total Downloads](https://poser.pugx.org/cache/adapter-common/downloads)](https://packagist.org/packages/cache/adapter-common)
 | [CacheBundle] | Bundle to integrate **any** PSR-6 service with the<br>Symfony framework. | [![Latest Stable Version](https://poser.pugx.org/cache/cache-bundle/v/stable)](https://packagist.org/packages/cache/cache-bundle) [![Total Downloads](https://poser.pugx.org/cache/cache-bundle/downloads)](https://packagist.org/packages/cache/cache-bundle)
@@ -124,6 +135,7 @@ We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.co
 [Apc]: https://github.com/php-cache/apc-adapter
 [Apcu]: https://github.com/php-cache/apcu-adapter
 [Array]: https://github.com/php-cache/array-adapter
+[Cache]: https://github.com/php-cache/cache
 [CacheBundle]: https://github.com/php-cache/cache-bundle
 [Chain]: https://github.com/php-cache/chain-adapter
 [Doctrine]: https://github.com/php-cache/doctrine-adapter
