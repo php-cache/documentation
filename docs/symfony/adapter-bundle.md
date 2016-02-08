@@ -39,7 +39,7 @@ The factories that come with this bundle can be found in the table below.
 | cache.factory.apc |  |
 | cache.factory.apcu |  |
 | cache.factory.array |  |
-| cache.factory.chain | array of service ids |
+| cache.factory.chain | `services` |
 | cache.factory.filesystem | `flysystem_service` |
 | cache.factory.memcached | `host`, `port` |
 | cache.factory.memcache | `host`, `port` |
@@ -83,8 +83,9 @@ cache_adapter:
     my_chain:
       factory: 'cache.factory.chain'
       options:
-        - @cache.provider.my_apc
-        - @cache.provider.my_redis
+        services:
+            - @cache.provider.my_apc
+            - @cache.provider.my_redis
 ```
 
 
