@@ -30,6 +30,7 @@ cache_adapter:
     my_adapter:
       factory: 'service_id.to.my_adapter_factory'
       options: []
+      aliases: ['alias.my_adapter']
 ```
 
 The factories that come with this bundle can be found in the table below. 
@@ -74,6 +75,7 @@ cache_adapter:
         port: 6379
     my_memcached:
       factory: 'cache.factory.memcached'
+      aliases: ['alias.my_memcached']
     my_file_system:
       factory: 'cache.factory.filesystem'
       options:
@@ -99,6 +101,9 @@ Use the new service as any PSR-6 cache.
 ``` php
 /** @var CacheItemPoolInterface $pool */
 $pool = $this->container->get('cache.provider.my_memcached');
+
+/** or */
+$pool = $this->container->get('alias.my_memcached');
 
 /** @var CacheItemInterface $item */
 $item = $pool->getItem('cache-key');
