@@ -1,74 +1,55 @@
-# Implement cache tags
-
-*Note: You will find the best performance when using a driver that automatically purges stale records. e.g. Memcache(d) or Redis*
+# Tagging your cache items
 
 ## Usage
 
 To use Tagging with your project, use a pool that implements the `TaggablePoolInterface`, and follow the code examples below.
-We create three cache items and store them in the cache with different tags. The order of the tags does not matter. 
+We create three cache items and store them in the cache with different tags. 
 
 ```php
 // $pool is a PSR-6 cache that implements TaggablePoolInterface
 
-$item = $pool->getItem('tobias', ['developer', 'speaker']);
-$item->set('foobar');
+$item = $pool->getItem('tobias');
+$item->set('value')
+  ->setTags(['tag0', 'tag1'])
 $pool->save($item);
 
-$item = $pool->getItem('aaron', ['developer', 'awesome']);
-$item->set('foobar');
+$item = $pool->getItem('aaron');
+$item->set('value')
+  ->addTag('tag0');
 $pool->save($item);
-
-$item = $pool->getItem('the_king_of_Sweden', ['awesome', 'king']);
-$item->set('foobar');
-$pool->save($item);
-```
-
-The following code shows how tags work:
-
-```php
-$pool->getItem('tobias', ['developer', 'speaker'])->isHit(); // true
-$pool->getItem('tobias', ['speaker', 'developer'])->isHit(); // true
-$pool->getItem('tobias', ['developer'])->isHit(); // false
-$pool->getItem('tobias', ['king'])->isHit(); // false
-$pool->getItem('tobias')->isHit(); // false
 ```
 
 You can clear the cache like so:
 
 ```php
 
-// Remove everything tagged with 'awesome'
-$pool->clear(['awesome']);
-$pool->getItem('tobias', ['developer', 'speaker'])->isHit(); // true
-$pool->getItem('aaron', ['developer', 'awesome'])->isHit(); // false
-$pool->getItem('the_king_of_Sweden', ['awesome', 'king'])->isHit(); // false
+// Remove everything tagged with 'tag1'
+$pool->clearTags(['tag1']);
+$pool->getItem('tobias')->isHit(); // false
+$pool->getItem('aaron')->isHit(); // true
 
 // To clear everything
 $pool->clear();
 ```
 
-## Implemantation notes
 
-There is a rare case where you might find issues with this implementation. Some tags cached in memory for performance, 
-this might lead to uncleared cache if you have long running request. The following example will show the issue. 
+# Tagging in third party libraries
+
+If you are writing a library and you need to use tagging you should not type hint for the `TaggablePoolInterface` because that will force the 
+users of your library to use php-cache. You should still type hint to `CacheItemPoolInterface` but you should use our `TaggablePSR6PoolAdapter`
+that will work as a decorator for `CacheItemPoolInterface` so you can use it as a `TaggablePoolInterface`. 
+
 
 ```php
-// Request A, T: 0
-$item = $pool->getItem('key', ['tag']);
-$item->set('value');
-$pool->save($item);
-$pool->isHit('key', ['tag']); // true
+class AcmeLibrary {
+    /**
+     * @var TaggablePoolInterface
+     */
+    private $cache;
+    
+    public function __construct(CacheItemPoolInterface $cache) {
+        $this->cache = TaggablePSR6PoolAdapter::makeTaggable($cache);
+    }
 
-// Request B, T: 1
-$pool->clear(['tag']);
-$pool->isHit('key', ['tag']); // false
-
-// Request C, T: 2
-$pool->isHit('key', ['tag']); // false
-
-// Request A, T: 2
-$pool->isHit('key', ['tag']); // true
 ```
-
-If request A is a background task that you are running for hours/days then you have a problem that the cache tag never
-will be cleared. 
+If the user uses a `TaggablePoolInterface` to construct `AcmeLibrary` this will have no overhead. 

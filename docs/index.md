@@ -73,21 +73,22 @@ on PHP extension. Like the Redis adapter requires `ext-redis`.
 
 #### Tagging
 
-Tags can be used to separate the storage of different systems in the cache. This allows different sections to be cleared on an individual level, while also preventing overlapping keys.
+Tags is used to control the invalidation of items. 
 
 ```php
-$item = $pool->getItem('bow', ['weapons'])->set('weapon_value');
+$item = $pool->getItem('tobias');
+$item->set('value')->setTags(['tag0', 'tag1'])
 $pool->save($item);
 
-$item = $pool->getItem('bow', ['london_districts'])->set('london_value');
+$item = $pool->getItem('aaron');
+$item->set('value')->addTag('tag0');
 $pool->save($item);
 
-$pool->getItem('bow', ['weapons'])->isHit(); // true
-$pool->getItem('bow', ['london_districts'])->isHit(); // true
+// Remove everything tagged with 'tag1'
+$pool->clearTags(['tag1']);
+$pool->getItem('tobias')->isHit(); // false
+$pool->getItem('aaron')->isHit(); // true
 
-$pool->clear(['london_districts']);
-$pool->getItem('bow', ['weapons'])->isHit(); // true
-$pool->getItem('bow', ['london_districts'])->isHit(); // false
 ```
 
 #### Hierarchy
@@ -100,6 +101,29 @@ $pool->hasItem('|users|4711|followers|12|likes'); // True
 $pool->deleteItem('|users|4711|followers');
 $pool->hasItem('|users|4711|followers|12|likes'); // False
 ```
+
+#### Namespace
+
+Namespace can be used to separate the storage of different systems in the cache. This allows different sections to be cleared on an individual level, while also preventing overlapping keys.
+
+```php
+$pool = new ArrayCachePool();
+
+$namespaceFoo = new NamespacedCachePool($pool, 'foo');
+$item = $namespaceFoo->getItem('key')->set('value');
+$namespaceFoo->save($item);
+
+$namespaceBar = new NamespacedCachePool($pool, 'bar');
+$namespaceBar->hasItem('key'); // False
+$item = $namespaceBar->getItem('key')->set('value');
+$namespaceBar->save($item);
+
+$namespaceBar->hasItem('key'); // True
+$namespaceFoo->deleteItem('key');
+$namespaceFoo->hasItem('key'); // False
+$namespaceBar->hasItem('key'); // True
+```
+
 
 ## Framework integration
 
@@ -124,6 +148,7 @@ Excluding our adapters, we have the following packages
 | [Doctrine bride] | A bridge from PSR-6 to DoctrineCache | [![Latest Stable Version](https://poser.pugx.org/cache/psr-6-doctrine-bridge/v/stable)](https://packagist.org/packages/cache/psr-6-doctrine-bridge) [![Total Downloads](https://poser.pugx.org/cache/psr-6-doctrine-bridge/downloads)](https://packagist.org/packages/cache/psr-6-doctrine-bridge)
 | [Hierarchical cache] | A trait and interface to support cache hierachy | [![Latest Stable Version](https://poser.pugx.org/cache/hierarchical-cache/v/stable)](https://packagist.org/packages/cache/hierarchical-cache) [![Total Downloads](https://poser.pugx.org/cache/hierarchical-cache/downloads)](https://packagist.org/packages/cache/hierarchical-cache)
 | [Integration tests] | Used to verify **any** PSR-6 implementation | [![Latest Stable Version](https://poser.pugx.org/cache/integration-tests/v/stable)](https://packagist.org/packages/cache/integration-tests) [![Total Downloads](https://poser.pugx.org/cache/integration-tests/downloads)](https://packagist.org/packages/cache/integration-tests)
+| [Namespaced cache] | Pool to support a namespace | [![Latest Stable Version](https://poser.pugx.org/cache/namespaced-cache/v/stable)](https://packagist.org/packages/cache/namespaced-cache) [![Total Downloads](https://poser.pugx.org/cache/namespaced-cache/downloads)](https://packagist.org/packages/cache/namespaced-cache)
 | [Session handler] | Implementation of `\SessionHandlerInterface` | [![Latest Stable Version](https://poser.pugx.org/cache/session-handler/v/stable)](https://packagist.org/packages/cache/session-handler) [![Total Downloads](https://poser.pugx.org/cache/session-handler/downloads)](https://packagist.org/packages/cache/session-handler)
 | [Taggable cache] | Traits and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
 
@@ -151,6 +176,7 @@ We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.co
 [MongoDB]: https://github.com/php-cache/mongodb-adapter
 [Predis]: https://github.com/php-cache/predis-adapter
 [Redis]: https://github.com/php-cache/redis-adapter
+[Namespaced cache]: https://github.com/php-cache/namespaced-cache
 [Session handler]: https://github.com/php-cache/session-handler
 [Taggable cache]: https://github.com/php-cache/taggable-cache
 [Void]: https://github.com/php-cache/void-adapter
