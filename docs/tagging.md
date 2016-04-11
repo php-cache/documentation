@@ -41,7 +41,8 @@ that will work as a decorator for `CacheItemPoolInterface` so you can use it as 
 
 
 ```php
-class AcmeLibrary {
+class AcmeLibrary
+{
     /**
      * @var TaggablePoolInterface
      */
@@ -50,6 +51,6 @@ class AcmeLibrary {
     public function __construct(CacheItemPoolInterface $cache) {
         $this->cache = TaggablePSR6PoolAdapter::makeTaggable($cache);
     }
-
+}
 ```
 If the user uses a `TaggablePoolInterface` to construct `AcmeLibrary` this will have no overhead. 
