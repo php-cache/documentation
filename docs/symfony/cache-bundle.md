@@ -113,7 +113,7 @@ cache:
 
 ### Annotation
 
-To use a PSR-6 cache for your annotations, use the following confguration.
+To use a PSR-6 cache for your annotations, use the following configuration.
 
 ```yml
 cache:
@@ -121,14 +121,14 @@ cache:
     enabled: true
     service_id: 'cache.provider.acme_apc_cache'
     
-framwork:
+framework:
   annotations:
     cache: 'cache.service.annotation'
 ```
 
 ### Serialization
 
-To use a PSR-6 cache for the serialzer, use the following confguration. 
+To use a PSR-6 cache for the serializer, use the following configuration. 
 
 ```yml
 cache:
@@ -136,7 +136,7 @@ cache:
     enabled: true
     service_id: 'cache.provider.acme_apc_cache'
     
-framwork:
+framework:
   serializer:
     cache: 'cache.service.serializer'
 ```
@@ -151,7 +151,7 @@ cache:
     enabled: true
     service_id: 'cache.provider.acme_apc_cache'
 
-framwork:
+framework:
   validation:
     cache: 'cache.service.validation'
 ```
