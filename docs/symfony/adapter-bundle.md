@@ -42,7 +42,7 @@ The factories that come with this bundle can be found in the table below.
 | cache.factory.array |  |
 | cache.factory.chain | `services` |
 | cache.factory.filesystem | `flysystem_service` |
-| cache.factory.memcached | `host`, `port` |
+| cache.factory.memcached | `host`, `port`, `persistent_id` |
 | cache.factory.memcache | `host`, `port` |
 | cache.factory.mongodb | `host`, `port`, `namespace` |
 | cache.factory.predis | `host`, `port`, `schema` |
