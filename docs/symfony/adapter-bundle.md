@@ -44,9 +44,9 @@ The factories that come with this bundle can be found in the table below.
 | cache.factory.filesystem | `flysystem_service` |
 | cache.factory.memcached | `host`, `port`, `persistent_id`, `pool_namespace` |
 | cache.factory.memcache | `host`, `port` |
-| cache.factory.mongodb | `host`, `port`, `namespace` |
+| cache.factory.mongodb | `host`, `port`, `namespace`, `dsn` |
 | cache.factory.predis | `host`, `port`, `schema`, `pool_namespace` |
-| cache.factory.redis | `host`, `port`, `pool_namespace` |
+| cache.factory.redis | `host`, `port`, `pool_namespace`, `dsn` |
 | cache.factory.void |  |
 | | |
 | cache.factory.doctrine_couchbase | `host`, `user`, `password`, `bucket` |
