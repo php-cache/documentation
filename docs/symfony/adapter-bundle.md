@@ -42,11 +42,11 @@ The factories that come with this bundle can be found in the table below.
 | cache.factory.array |  |
 | cache.factory.chain | `services`, `skip_on_failure` |
 | cache.factory.filesystem | `flysystem_service` |
-| cache.factory.memcached | `host`, `port`, `persistent_id` |
+| cache.factory.memcached | `host`, `port`, `persistent_id`, `pool_namespace` |
 | cache.factory.memcache | `host`, `port` |
 | cache.factory.mongodb | `host`, `port`, `namespace` |
-| cache.factory.predis | `host`, `port`, `schema` |
-| cache.factory.redis | `host`, `port`, `namespace` |
+| cache.factory.predis | `host`, `port`, `schema`, `pool_namespace` |
+| cache.factory.redis | `host`, `port`, `pool_namespace` |
 | cache.factory.void |  |
 | | |
 | cache.factory.doctrine_couchbase | `host`, `user`, `password`, `bucket` |
