@@ -184,7 +184,8 @@ echo "Run the following command to see all your options:"
 php app/console cache:flush help
 ```
 
-*Caution: If you are using an implementation that does not support tagging you will clear all with any of the above commands.*
+*Caution: If you are using an implementation that does not support tagging you will clear all with any of the above commands. 
+Make sure you always have the option `use_tagging` to avoid this.* 
 
 
 [CacheAdapterBundle]:https://github.com/php-cache/cache-adapter-bundle
