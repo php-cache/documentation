@@ -27,6 +27,9 @@ $bundles = [
 
 ## Configuration
 
+Below is configuration for the different components where you can use caching. Most components has a `use_tagging` 
+option. That will add tags to the cache item which makes it possible to be selective when clearing cache. 
+
 To see all the config options, run `php app/console config:dump-reference cache`.
 
 ### Doctrine
@@ -45,6 +48,7 @@ If you want Doctrine to use this as the result and query cache, you need this co
 cache:
   doctrine:
     enabled: true
+    use_tagging: true
     metadata:
       service_id: 'cache.provider.acme_redis_cache'
       entity_managers:   [ default ]       # the name of your entity_manager connection
@@ -76,6 +80,7 @@ cache:
   session:
     enabled: true
     service_id: 'cache.provider.acme_redis_cache'
+    use_tagging: true
     ttl: 7200
 ```
 
@@ -120,6 +125,7 @@ cache:
   annotation:
     enabled: true
     service_id: 'cache.provider.acme_apc_cache'
+    use_tagging: true
     
 framework:
   annotations:
@@ -135,6 +141,7 @@ cache:
   serializer:
     enabled: true
     service_id: 'cache.provider.acme_apc_cache'
+    use_tagging: true
     
 framework:
   serializer:
@@ -150,6 +157,7 @@ cache:
   validation:
     enabled: true
     service_id: 'cache.provider.acme_apc_cache'
+    use_tagging: true
 
 framework:
   validation:
