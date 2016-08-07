@@ -68,7 +68,21 @@ $em = $this->get('doctrine.orm.entity_manager');
 $q = $em->('SELECT u.* FROM Acme\User u');
 $q->useResultCache(true, 3600); 
 $result = $q->getResult();
+```
 
+#### Create a DoctrineCache service
+
+If you want a service that implements DoctrineCache but is using a PSR-6 adapter you may use the `DoctrineBridgeFactory`
+directly. First you need to make sure that you have installed `cache/psr-6-doctrine-bridge`. Then you can define your 
+service like: 
+
+```yaml
+// app/config/services.yml
+services:
+  my_doctrine_cache:
+    class: Cache\AdapterBundle\DummyAdapter
+    factory: [Cache\CacheBundle\Factory\DoctrineBridgeFactory, get]
+    arguments: ['@cache.provider.my_redis', {'use_tagging':false}, []]
 ```
 
 ### Session
