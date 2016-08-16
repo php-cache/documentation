@@ -42,8 +42,8 @@ The factories that come with this bundle can be found in the table below.
 | cache.factory.array |  |
 | cache.factory.chain | `services`, `skip_on_failure` |
 | cache.factory.filesystem | `flysystem_service` |
-| cache.factory.memcached | `host`, `port`, `persistent_id`, `pool_namespace` |
-| cache.factory.memcache | `host`, `port` |
+| cache.factory.memcached | `host`, `port`, `persistent_id`, `pool_namespace`, `redundant_servers` |
+| cache.factory.memcache | `host`, `port`, `redundant_servers` |
 | cache.factory.mongodb | `host`, `port`, `namespace`, `dsn` |
 | cache.factory.predis | `host`, `port`, `schema`, `pool_namespace` |
 | cache.factory.redis | `host`, `port`, `pool_namespace`, `dsn` |
@@ -63,6 +63,7 @@ The factories that come with this bundle can be found in the table below.
 | cache.factory.doctrine_zenddata |  |
 
 
+
 ### Example configuration
 
 ```yaml
@@ -76,6 +77,12 @@ cache_adapter:
     my_memcached:
       factory: 'cache.factory.memcached'
       aliases: ['alias.my_memcached']
+      options:
+        host: 10.0.0.16
+        port: 11218
+        redundant_servers:
+          - { host: 10.0.0.17, port: 11211  }
+          - { host: 10.0.0.18 } # port 11218 will be used
     my_file_system:
       factory: 'cache.factory.filesystem'
       options:
@@ -86,8 +93,8 @@ cache_adapter:
       factory: 'cache.factory.chain'
       options:
         services:
-            - @cache.provider.my_apc
-            - @cache.provider.my_redis
+            - '@cache.provider.my_apc'
+            - '@cache.provider.my_redis'
 ```
 
 
