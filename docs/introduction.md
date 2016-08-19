@@ -1,8 +1,8 @@
 # PSR-6 Cache Introduction
  
 In the late fall 2015 the [PHP-FIG](http://www.php-fig.org/) released a specification
-for caching. It is called the [PSR-6](http://www.php-fig.org/psr/psr-6/). Like all the 
-PSRs it is just a recommendation for improve interoperability. 
+for caching. It is called [PSR-6](http://www.php-fig.org/psr/psr-6/). Like all the 
+PSRs, it is just a recommendation for improve interoperability. 
 
 ## Basic concepts
 
@@ -35,7 +35,7 @@ $pool->hasItem('cache_key'); // False
 
 ## Cache keys
 
-According to the PSR-6 the following characters could be used in a valid cache key; 
+According to PSR-6 the following characters could be used in a valid cache key; 
 `A-Z`, `a-z`, `0-9`, `_`, and `.`. Some characters are forbidden like: `{}()/\@:`. If
 you use any of the forbidden characters you will get an exception. Other characters
 (like `-`) are not forbidden nor valid. It is up to the implementation if they support
@@ -51,7 +51,7 @@ $cacheKey = sha1($_SERVER['REQUEST_URI']);
 
 ## Choosing a pool
 
-What cache pool you  want to use is up to you. As you can in the 
+What cache pool you  want to use is up to you. As you can see in the 
 [table on the startpage](index.md#cache-pool-implementations), different pools have
 different features. Commonly used poos are: 
 * Apcu
@@ -72,6 +72,6 @@ $pool = new MemcachedCachePool($client);
 
 ## Features
 
-The PHP-Cache organization has build some more features on top of PSR-6. Look at our
+The PHP-Cache organization has built some more features on top of PSR-6. Look at our
 documentation for [tagging](tagging.md), [hierarchy](hierachy.md) or 
 [namespace](namespace.md) for more information.
