@@ -7,6 +7,8 @@ The PHP Cache organization is dedicated to providing solid, powerful, flexible, 
 
 Below you will find information about what features our libraries offer, and what adapters we have. You can also find out framework integration libraries.
 
+If you are new to PSR-6 caching you may want to have a look at our [introduction](introduction.md).
+
 ## Cache pool implementations
 
 There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple packages complies with the *Common reuse principle* and makes it easier for the developer to follow the changes of a specific adapter. 
