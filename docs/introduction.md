@@ -73,5 +73,5 @@ $pool = new MemcachedCachePool($client);
 ## Features
 
 The PHP-Cache organization has built some more features on top of PSR-6. Look at our
-documentation for [tagging](tagging.md), [hierarchy](hierachy.md) or 
+documentation for [tagging](tagging.md), [hierarchy](hierarchy.md) or 
 [namespace](namespace.md) for more information.
