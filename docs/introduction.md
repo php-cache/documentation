@@ -54,6 +54,7 @@ $cacheKey = sha1($_SERVER['REQUEST_URI']);
 What cache pool you  want to use is up to you. As you can see in the 
 [table on the startpage](index.md#cache-pool-implementations), different pools have
 different features. Commonly used poos are: 
+
 * Apcu
 * Array
 * Memcached
