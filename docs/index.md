@@ -124,6 +124,37 @@ $namespaceBar->hasItem('key'); // True
 $namespaceFoo->deleteItem('key');
 $namespaceFoo->hasItem('key'); // False
 $namespaceBar->hasItem('key'); // True
+
+$namespaceFoo->clear();
+$namespaceBar->hasItem('key'); // True
+```
+
+#### Prefix
+
+A prefix will help you to avoid cache key collisions. The prefixed cache pool supports any PSR-6 
+cache implementations. The PrefixedCachePool differs from the NamespacedCachePool in two aspects: 
+
+1) You could still have conflicts if one cache key includes the prefix
+2) When clearing the cache all cache items will be cleared, not only the prefixed ones. 
+
+```php
+$pool = new ArrayCachePool();
+
+$prefixedFoo = new PrefixedCachePool($pool, 'foo');
+$item = $prefixedFoo->getItem('key')->set('value');
+$prefixedFoo->save($item);
+
+$pool->hasItem('key'); // False
+$item = $pool->getItem('key')->set('value');
+$pool->save($item);
+
+$pool->hasItem('key'); // True
+$prefixedFoo->deleteItem('key');
+$prefixedFoo->hasItem('key'); // False
+$pool->hasItem('key'); // True
+
+$prefixedFoo->clear();
+$pool->hasItem('key'); // False
 ```
 
 
@@ -151,6 +182,7 @@ Excluding our adapters, we have the following packages
 | [Hierarchical cache] | A trait and interface to support cache hierachy | [![Latest Stable Version](https://poser.pugx.org/cache/hierarchical-cache/v/stable)](https://packagist.org/packages/cache/hierarchical-cache) [![Total Downloads](https://poser.pugx.org/cache/hierarchical-cache/downloads)](https://packagist.org/packages/cache/hierarchical-cache)
 | [Integration tests] | Used to verify **any** PSR-6 implementation | [![Latest Stable Version](https://poser.pugx.org/cache/integration-tests/v/stable)](https://packagist.org/packages/cache/integration-tests) [![Total Downloads](https://poser.pugx.org/cache/integration-tests/downloads)](https://packagist.org/packages/cache/integration-tests)
 | [Namespaced cache] | Pool to support a namespace | [![Latest Stable Version](https://poser.pugx.org/cache/namespaced-cache/v/stable)](https://packagist.org/packages/cache/namespaced-cache) [![Total Downloads](https://poser.pugx.org/cache/namespaced-cache/downloads)](https://packagist.org/packages/cache/namespaced-cache)
+| [Prefixed cache] | Pool to support a prefix | [![Latest Stable Version](https://poser.pugx.org/cache/prefixed-cache/v/stable)](https://packagist.org/packages/cache/prefixed-cache) [![Total Downloads](https://poser.pugx.org/cache/prefixed-cache/downloads)](https://packagist.org/packages/cache/prefixed-cache)
 | [Session handler] | Implementation of `\SessionHandlerInterface` | [![Latest Stable Version](https://poser.pugx.org/cache/session-handler/v/stable)](https://packagist.org/packages/cache/session-handler) [![Total Downloads](https://poser.pugx.org/cache/session-handler/downloads)](https://packagist.org/packages/cache/session-handler)
 | [Taggable cache] | Traits and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
 
@@ -179,6 +211,7 @@ We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.co
 [Predis]: https://github.com/php-cache/predis-adapter
 [Redis]: https://github.com/php-cache/redis-adapter
 [Namespaced cache]: https://github.com/php-cache/namespaced-cache
+[Prefixed cache]: https://github.com/php-cache/prefixed-cache
 [Session handler]: https://github.com/php-cache/session-handler
 [Taggable cache]: https://github.com/php-cache/taggable-cache
 [Void]: https://github.com/php-cache/void-adapter
