@@ -10,7 +10,7 @@ $client = new \Redis();
 $client->connect('127.0.0.1', 6379);
 $pool = new RedisCachePool($client);
 
-// Decorate it with a NamesapcedPool
+// Decorate it with a NamespacedPool
 $namespacedPool = new NamespacedCachePool($pool, 'acme');
 
 $item = $namespacedPool->getItem('foo')->set('bar');
