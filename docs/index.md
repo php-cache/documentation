@@ -201,7 +201,7 @@ We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.co
 [CacheBundle]: https://github.com/php-cache/cache-bundle
 [Chain]: https://github.com/php-cache/chain-adapter
 [Doctrine]: https://github.com/php-cache/doctrine-adapter
-[Doctrine bride]: https://github.com/php-cache/doctrine-bridge
+[Doctrine bridge]: https://github.com/php-cache/doctrine-bridge
 [Filesystem]: https://github.com/php-cache/filesystem-adapter
 [Hierarchical cache]: https://github.com/php-cache/hierarchical-cache
 [Integration tests]: https://github.com/php-cache/integration-tests
