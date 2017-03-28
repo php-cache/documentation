@@ -3,30 +3,36 @@
 <img align="right" src="https://raw.githubusercontent.com/php-cache/documentation/master/logos/php-cache-logo-256.png" />
 
 
-The PHP Cache organization is dedicated to providing solid, powerful, flexible, and lightweight caching libraries for PHP projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) compliant. If you are a library implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) to help you meet the PSR-6 specification.
+The PHP Cache organization is dedicated to providing solid, powerful, flexible, and lightweight caching libraries for PHP
+projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) and [PSR-16](http://www.php-fig.org/psr/psr-16/) 
+compliant. If you are a library implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) 
+to help you meet the PSR specification.
 
-Below you will find information about what features our libraries offer, and what adapters we have. You can also find out framework integration libraries.
+Below you will find information about what features our libraries offer, and what adapters we have. You can also find out
+framework integration libraries.
 
 If you are new to PSR-6 caching you may want to have a look at our [introduction](introduction.md).
 
 ## Cache pool implementations
 
-There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple packages complies with the *Common reuse principle* and makes it easier for the developer to follow the changes of a specific adapter. 
+There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple
+packages complies with the *Common reuse principle* and makes it easier for the developer to follow the changes of a specific
+adapter. 
 
 Each adapter has it own features. The table below lists all our adapters and their features. 
 
 
 | Adapter | Tagging | Hierarchy* | Badges |
 | ------- | ------- | ---------- | ------ |
-| [Apc] | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/apc-adapter/v/stable)](https://packagist.org/packages/cache/apc-adapter) [![Total Downloads](https://poser.pugx.org/cache/apc-adapter/downloads)](https://packagist.org/packages/cache/apc-adapter)
-| [Apcu] | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/apcu-adapter/v/stable)](https://packagist.org/packages/cache/apcu-adapter) [![Total Downloads](https://poser.pugx.org/cache/apcu-adapter/downloads)](https://packagist.org/packages/cache/apcu-adapter)
+| [Apc] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/apc-adapter/v/stable)](https://packagist.org/packages/cache/apc-adapter) [![Total Downloads](https://poser.pugx.org/cache/apc-adapter/downloads)](https://packagist.org/packages/cache/apc-adapter)
+| [Apcu] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/apcu-adapter/v/stable)](https://packagist.org/packages/cache/apcu-adapter) [![Total Downloads](https://poser.pugx.org/cache/apcu-adapter/downloads)](https://packagist.org/packages/cache/apcu-adapter)
 | [Array] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/array-adapter/v/stable)](https://packagist.org/packages/cache/array-adapter) [![Total Downloads](https://poser.pugx.org/cache/array-adapter/downloads)](https://packagist.org/packages/cache/array-adapter)
 | Couchbase (via [Doctrine]) | Yes | No | | 
 | [Filesystem](https://github.com/php-cache/filesystem-adapter) (via [Flysystem]) | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/filesystem-adapter/v/stable)](https://packagist.org/packages/cache/filesystem-adapter) [![Total Downloads](https://poser.pugx.org/cache/filesystem-adapter/downloads)](https://packagist.org/packages/cache/filesystem-adapter)
-| [Illuminate] | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/illuminate-adapter/v/stable)](https://packagist.org/packages/cache/illuminate-adapter) [![Total Downloads](https://poser.pugx.org/cache/illuminate-adapter/downloads)](https://packagist.org/packages/cache/illuminate-adapter)
-| [Memcache] | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/memcache-adapter/v/stable)](https://packagist.org/packages/cache/memcache-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcache-adapter/downloads)](https://packagist.org/packages/cache/memcache-adapter)
-| [Memcached] | No | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/memcached-adapter/v/stable)](https://packagist.org/packages/cache/memcached-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcached-adapter/downloads)](https://packagist.org/packages/cache/memcached-adapter)
-| [MongoDB] | Not yet | No | [![Latest Stable Version](https://poser.pugx.org/cache/mongodb-adapter/v/stable)](https://packagist.org/packages/cache/mongodb-adapter) [![Total Downloads](https://poser.pugx.org/cache/mongodb-adapter/downloads)](https://packagist.org/packages/cache/mongodb-adapter)
+| [Illuminate] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/illuminate-adapter/v/stable)](https://packagist.org/packages/cache/illuminate-adapter) [![Total Downloads](https://poser.pugx.org/cache/illuminate-adapter/downloads)](https://packagist.org/packages/cache/illuminate-adapter)
+| [Memcache] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/memcache-adapter/v/stable)](https://packagist.org/packages/cache/memcache-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcache-adapter/downloads)](https://packagist.org/packages/cache/memcache-adapter)
+| [Memcached] | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/memcached-adapter/v/stable)](https://packagist.org/packages/cache/memcached-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcached-adapter/downloads)](https://packagist.org/packages/cache/memcached-adapter)
+| [MongoDB] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/mongodb-adapter/v/stable)](https://packagist.org/packages/cache/mongodb-adapter) [![Total Downloads](https://poser.pugx.org/cache/mongodb-adapter/downloads)](https://packagist.org/packages/cache/mongodb-adapter)
 | [Predis] | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/predis-adapter/v/stable)](https://packagist.org/packages/cache/predis-adapter) [![Total Downloads](https://poser.pugx.org/cache/predis-adapter/downloads)](https://packagist.org/packages/cache/predis-adapter)
 | [Redis] | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/redis-adapter/v/stable)](https://packagist.org/packages/cache/redis-adapter) [![Total Downloads](https://poser.pugx.org/cache/redis-adapter/downloads)](https://packagist.org/packages/cache/redis-adapter)
 | Riak (via [Doctrine])| Yes | No | | 
@@ -39,17 +45,21 @@ Each adapter has it own features. The table below lists all our adapters and the
 | [Chain] | Yes | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
 | [Doctrine] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/doctrine-adapter/v/stable)](https://packagist.org/packages/cache/doctrine-adapter) [![Total Downloads](https://poser.pugx.org/cache/doctrine-adapter/downloads)](https://packagist.org/packages/cache/doctrine-adapter)
 
-\* *Hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stale or no longer used. That is why hierarchy will work better on such cache storages.*
+\* *Hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages 
+like Redis and Memcache will automatically remove these items when they're stale or no longer used. That is why hierarchy
+will work better on such cache storages.*
   
 
 
 ### Chain adapter
 
-We also have a chain adapter where you can chain multiple pool together. It is great if you have a fast storage with limited memory and a slower storage with loads of memory. 
+We also have a chain adapter where you can chain multiple pool together. It is great if you have a fast storage with limited 
+memory and a slower storage with loads of memory. 
 
 ### Doctrine adapter
 
-The doctrine adapter is a PSR-6 adapter that wraps a `Doctrine\Common\Cache\Cache` object. With this adapter you can use storages like Riak and WinCache which currently do not have any PHP Cache adapters. 
+The doctrine adapter is a PSR-6 adapter that wraps a `Doctrine\Common\Cache\Cache` object. With this adapter you can use 
+storages like Riak and WinCache which currently do not have any PHP Cache adapters. 
 
 ## Installation
 
@@ -96,7 +106,8 @@ $pool->getItem('aaron')->isHit(); // true
 
 #### Hierarchy
 
-Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierarchical cache key must start with a pipe ("|").
+Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. 
+A hierarchical cache key must start with a pipe ("|").
 
 
 ```php
@@ -107,7 +118,8 @@ $pool->hasItem('|users|4711|followers|12|likes'); // False
 
 #### Namespace
 
-Namespace can be used to separate the storage of different systems in the cache. This allows different sections to be cleared on an individual level, while also preventing overlapping keys.
+Namespace can be used to separate the storage of different systems in the cache. This allows different sections to be cleared
+on an individual level, while also preventing overlapping keys.
 
 ```php
 $pool = new ArrayCachePool();
@@ -165,9 +177,12 @@ $pool->hasItem('key'); // False
 
 There are two Symfony bundles; [AdapterBundle] and [CacheBundle]. 
 
-The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  CacheBundle is used to integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
+The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  CacheBundle is used to 
+integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and 
+many more. 
 
-We would LOVE to see integration with Zend, Laravel, Yii, Cake, and even Code Igniter. If you would like to contribute, we would love to see your code.
+We would LOVE to see integration with Zend, Laravel, Yii, Cake, and even Code Igniter. If you would like to contribute, 
+we would love to see your code.
 
 ## Organisation overview
 
@@ -185,13 +200,15 @@ Excluding our adapters, we have the following packages
 | [Namespaced cache] | Pool to support a namespace | [![Latest Stable Version](https://poser.pugx.org/cache/namespaced-cache/v/stable)](https://packagist.org/packages/cache/namespaced-cache) [![Total Downloads](https://poser.pugx.org/cache/namespaced-cache/downloads)](https://packagist.org/packages/cache/namespaced-cache)
 | [Prefixed cache] | Pool to support a prefix | [![Latest Stable Version](https://poser.pugx.org/cache/prefixed-cache/v/stable)](https://packagist.org/packages/cache/prefixed-cache) [![Total Downloads](https://poser.pugx.org/cache/prefixed-cache/downloads)](https://packagist.org/packages/cache/prefixed-cache)
 | [Session handler] | Implementation of `\SessionHandlerInterface` | [![Latest Stable Version](https://poser.pugx.org/cache/session-handler/v/stable)](https://packagist.org/packages/cache/session-handler) [![Total Downloads](https://poser.pugx.org/cache/session-handler/downloads)](https://packagist.org/packages/cache/session-handler)
+| [Simple Cache Bridge] | Bridge from PSR-6 to PSR-16 SimpleCache | [![Latest Stable Version](https://poser.pugx.org/cache/simple-cache-bridger/v/stable)](https://packagist.org/packages/cache/simple-cache-bridge) [![Total Downloads](https://poser.pugx.org/cache/simple-cache-bridge/downloads)](https://packagist.org/packages/cache/simple-cache-bridge)
 | [Taggable cache] | Traits and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
 
 ## Contact
 
 [![Gitter](https://badges.gitter.im/php-cache/cache.svg)](https://gitter.im/php-cache/cache) 
 
-We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.com/aequasi) and [@tobiasnyholm](https://twitter.com/tobiasnyholm). You could also join us on [Gitter](https://gitter.im/php-cache/cache).
+We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.com/aequasi) and [@tobiasnyholm](https://twitter.com/tobiasnyholm). 
+You could also join us on [Gitter](https://gitter.im/php-cache/cache).
 
 [AdapterBundle]: https://github.com/php-cache/adapter-bundle
 [Adapter common]: https://github.com/php-cache/adapter-common
@@ -215,6 +232,7 @@ We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.co
 [Namespaced cache]: https://github.com/php-cache/namespaced-cache
 [Prefixed cache]: https://github.com/php-cache/prefixed-cache
 [Session handler]: https://github.com/php-cache/session-handler
+[Simple Cache Bridge]: https://github.com/php-cache/simple-cache-bridge
 [Taggable cache]: https://github.com/php-cache/taggable-cache
 [Void]: https://github.com/php-cache/void-adapter
 [Flysystem]: http://flysystem.thephpleague.com/
