@@ -25,6 +25,10 @@ $pool->save($item);
 $pool->hasItem('cache_key'); // True
 $item->isHit(); // True
 
+// Get stored values
+$myValue = $item->get();
+echo $myValue; // "value"
+
 // Delete
 $pool->deleteItem('cache_key');
 $pool->hasItem('cache_key'); // False
