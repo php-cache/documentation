@@ -3,15 +3,21 @@
 <img align="right" src="https://raw.githubusercontent.com/php-cache/documentation/master/logos/php-cache-logo-256.png" />
 
 
-The PHP Cache organization is dedicated to providing solid, powerful, flexible, and lightweight caching libraries for PHP projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) compliant. If you are a library implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) to help you meet the PSR-6 specification.
+The PHP Cache organization is dedicated to providing solid, powerful, flexible, and lightweight caching libraries for PHP
+projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) compliant. If you are a library
+implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) to help you meet the
+PSR-6 specification.
 
-Below you will find information about what features our libraries offer, and what adapters we have. You can also find out framework integration libraries.
+Below you will find information about what features our libraries offer, and what adapters we have. You can also find out
+framework integration libraries.
 
 If you are new to PSR-6 caching you may want to have a look at our [introduction](introduction.md).
 
 ## Cache pool implementations
 
-There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple packages complies with the *Common reuse principle* and makes it easier for the developer to follow the changes of a specific adapter. 
+There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple
+packages complies with the *Common reuse principle* and makes it easier for the developer to follow the changes of a specific
+adapter. 
 
 Each adapter has it own features. The table below lists all our adapters and their features. 
 
@@ -39,17 +45,21 @@ Each adapter has it own features. The table below lists all our adapters and the
 | [Chain] | Yes | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
 | [Doctrine] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/doctrine-adapter/v/stable)](https://packagist.org/packages/cache/doctrine-adapter) [![Total Downloads](https://poser.pugx.org/cache/doctrine-adapter/downloads)](https://packagist.org/packages/cache/doctrine-adapter)
 
-\* *Hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages like Redis and Memcache will automatically remove these items when they're stale or no longer used. That is why hierarchy will work better on such cache storages.*
+\* *Hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages 
+like Redis and Memcache will automatically remove these items when they're stale or no longer used. That is why hierarchy
+will work better on such cache storages.*
   
 
 
 ### Chain adapter
 
-We also have a chain adapter where you can chain multiple pool together. It is great if you have a fast storage with limited memory and a slower storage with loads of memory. 
+We also have a chain adapter where you can chain multiple pool together. It is great if you have a fast storage with limited 
+memory and a slower storage with loads of memory. 
 
 ### Doctrine adapter
 
-The doctrine adapter is a PSR-6 adapter that wraps a `Doctrine\Common\Cache\Cache` object. With this adapter you can use storages like Riak and WinCache which currently do not have any PHP Cache adapters. 
+The doctrine adapter is a PSR-6 adapter that wraps a `Doctrine\Common\Cache\Cache` object. With this adapter you can use 
+storages like Riak and WinCache which currently do not have any PHP Cache adapters. 
 
 ## Installation
 
@@ -96,7 +106,8 @@ $pool->getItem('aaron')->isHit(); // true
 
 #### Hierarchy
 
-Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. A hierarchical cache key must start with a pipe ("|").
+Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. 
+A hierarchical cache key must start with a pipe ("|").
 
 
 ```php
@@ -107,7 +118,8 @@ $pool->hasItem('|users|4711|followers|12|likes'); // False
 
 #### Namespace
 
-Namespace can be used to separate the storage of different systems in the cache. This allows different sections to be cleared on an individual level, while also preventing overlapping keys.
+Namespace can be used to separate the storage of different systems in the cache. This allows different sections to be cleared
+on an individual level, while also preventing overlapping keys.
 
 ```php
 $pool = new ArrayCachePool();
@@ -165,9 +177,12 @@ $pool->hasItem('key'); // False
 
 There are two Symfony bundles; [AdapterBundle] and [CacheBundle]. 
 
-The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  CacheBundle is used to integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and many more. 
+The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  CacheBundle is used to 
+integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and 
+many more. 
 
-We would LOVE to see integration with Zend, Laravel, Yii, Cake, and even Code Igniter. If you would like to contribute, we would love to see your code.
+We would LOVE to see integration with Zend, Laravel, Yii, Cake, and even Code Igniter. If you would like to contribute, 
+we would love to see your code.
 
 ## Organisation overview
 
@@ -191,7 +206,8 @@ Excluding our adapters, we have the following packages
 
 [![Gitter](https://badges.gitter.im/php-cache/cache.svg)](https://gitter.im/php-cache/cache) 
 
-We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.com/aequasi) and [@tobiasnyholm](https://twitter.com/tobiasnyholm). You could also join us on [Gitter](https://gitter.im/php-cache/cache).
+We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.com/aequasi) and [@tobiasnyholm](https://twitter.com/tobiasnyholm). 
+You could also join us on [Gitter](https://gitter.im/php-cache/cache).
 
 [AdapterBundle]: https://github.com/php-cache/adapter-bundle
 [Adapter common]: https://github.com/php-cache/adapter-common
