@@ -4,9 +4,9 @@
 
 
 The PHP Cache organization is dedicated to providing solid, powerful, flexible, and lightweight caching libraries for PHP
-projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) compliant. If you are a library
-implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) to help you meet the
-PSR-6 specification.
+projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) and [PSR-16](http://www.php-fig.org/psr/psr-16/) 
+compliant. If you are a library implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) 
+to help you meet the PSR specification.
 
 Below you will find information about what features our libraries offer, and what adapters we have. You can also find out
 framework integration libraries.
