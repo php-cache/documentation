@@ -94,14 +94,20 @@ $item->set('value')->setTags(['tag0', 'tag1'])
 $pool->save($item);
 
 $item = $pool->getItem('aaron');
-$item->set('value')->addTag('tag0');
+$item->set('value')->setTags(['tag0']);
 $pool->save($item);
 
 // Remove everything tagged with 'tag1'
-$pool->clearTags(['tag1']);
+$pool->invalidateTags(['tag1']);
 $pool->getItem('tobias')->isHit(); // false
 $pool->getItem('aaron')->isHit(); // true
 
+$item = $pool->getItem('aaron');
+echo $item->getPreviousTags(); // array('tag0')
+
+// No tags will be saved again. This is the same as saving
+// an item with no tags.
+$pool->save($item);
 ```
 
 #### Hierarchy
