@@ -23,6 +23,7 @@ Each adapter has it own features. The table below lists all our adapters and the
 | [Array] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/array-adapter/v/stable)](https://packagist.org/packages/cache/array-adapter) [![Total Downloads](https://poser.pugx.org/cache/array-adapter/downloads)](https://packagist.org/packages/cache/array-adapter)
 | Couchbase (via [Doctrine]) | Yes | No | | 
 | [Filesystem](https://github.com/php-cache/filesystem-adapter) (via [Flysystem]) | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/filesystem-adapter/v/stable)](https://packagist.org/packages/cache/filesystem-adapter) [![Total Downloads](https://poser.pugx.org/cache/filesystem-adapter/downloads)](https://packagist.org/packages/cache/filesystem-adapter)
+| [Illuminate] | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/illuminate-adapter/v/stable)](https://packagist.org/packages/cache/illuminate-adapter) [![Total Downloads](https://poser.pugx.org/cache/illuminate-adapter/downloads)](https://packagist.org/packages/cache/illuminate-adapter)
 | [Memcache] | No | No | [![Latest Stable Version](https://poser.pugx.org/cache/memcache-adapter/v/stable)](https://packagist.org/packages/cache/memcache-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcache-adapter/downloads)](https://packagist.org/packages/cache/memcache-adapter)
 | [Memcached] | No | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/memcached-adapter/v/stable)](https://packagist.org/packages/cache/memcached-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcached-adapter/downloads)](https://packagist.org/packages/cache/memcached-adapter)
 | [MongoDB] | Not yet | No | [![Latest Stable Version](https://poser.pugx.org/cache/mongodb-adapter/v/stable)](https://packagist.org/packages/cache/mongodb-adapter) [![Total Downloads](https://poser.pugx.org/cache/mongodb-adapter/downloads)](https://packagist.org/packages/cache/mongodb-adapter)
@@ -203,6 +204,7 @@ We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.co
 [Doctrine]: https://github.com/php-cache/doctrine-adapter
 [Doctrine bridge]: https://github.com/php-cache/doctrine-bridge
 [Filesystem]: https://github.com/php-cache/filesystem-adapter
+[Illuminate]: https://github.com/php-cache/illuminate-adapter
 [Hierarchical cache]: https://github.com/php-cache/hierarchical-cache
 [Integration tests]: https://github.com/php-cache/integration-tests
 [Memcache]: https://github.com/php-cache/memcache-adapter
