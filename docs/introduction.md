@@ -65,7 +65,7 @@ different features. Commonly used pools are:
 * Redis
 
 The steps to create a pool varies from pool to pool. Look at the pool's repository
-to see how to create it. Generally you create an connection to a cache implementation
+to see how to create it. Generally you create a connection to a cache implementation
 and then give it to the pool. See a Memcached example: 
 
 ```php
