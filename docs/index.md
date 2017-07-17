@@ -207,7 +207,8 @@ Excluding our adapters, we have the following packages
 | [Prefixed cache] | Pool to support a prefix | [![Latest Stable Version](https://poser.pugx.org/cache/prefixed-cache/v/stable)](https://packagist.org/packages/cache/prefixed-cache) [![Total Downloads](https://poser.pugx.org/cache/prefixed-cache/downloads)](https://packagist.org/packages/cache/prefixed-cache)
 | [Session handler] | Implementation of `\SessionHandlerInterface` | [![Latest Stable Version](https://poser.pugx.org/cache/session-handler/v/stable)](https://packagist.org/packages/cache/session-handler) [![Total Downloads](https://poser.pugx.org/cache/session-handler/downloads)](https://packagist.org/packages/cache/session-handler)
 | [Simple Cache Bridge] | Bridge from PSR-6 to PSR-16 SimpleCache | [![Latest Stable Version](https://poser.pugx.org/cache/simple-cache-bridge/v/stable)](https://packagist.org/packages/cache/simple-cache-bridge) [![Total Downloads](https://poser.pugx.org/cache/simple-cache-bridge/downloads)](https://packagist.org/packages/cache/simple-cache-bridge)
-| [Taggable cache] | Traits and interfaces to support cache tagging | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
+| [Taggable cache] | Decorator to make any PSR-6 cache taggable | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
+| [Tag interop] | Interfaces to support cache tagging. Soon to be PSR | [![Latest Stable Version](https://poser.pugx.org/cache/tag-interop/v/stable)](https://packagist.org/packages/cache/tag-interop) [![Total Downloads](https://poser.pugx.org/cache/tag-interop/downloads)](https://packagist.org/packages/cache/tag-interop)
 
 ## Contact
 
@@ -240,5 +241,6 @@ You could also join us on [Gitter](https://gitter.im/php-cache/cache).
 [Session handler]: https://github.com/php-cache/session-handler
 [Simple Cache Bridge]: https://github.com/php-cache/simple-cache-bridge
 [Taggable cache]: https://github.com/php-cache/taggable-cache
+[Tag interop]: https://github.com/php-cache/tag-interop
 [Void]: https://github.com/php-cache/void-adapter
 [Flysystem]: http://flysystem.thephpleague.com/
