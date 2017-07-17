@@ -208,7 +208,7 @@ Excluding our adapters, we have the following packages
 | [Session handler] | Implementation of `\SessionHandlerInterface` | [![Latest Stable Version](https://poser.pugx.org/cache/session-handler/v/stable)](https://packagist.org/packages/cache/session-handler) [![Total Downloads](https://poser.pugx.org/cache/session-handler/downloads)](https://packagist.org/packages/cache/session-handler)
 | [Simple Cache Bridge] | Bridge from PSR-6 to PSR-16 SimpleCache | [![Latest Stable Version](https://poser.pugx.org/cache/simple-cache-bridge/v/stable)](https://packagist.org/packages/cache/simple-cache-bridge) [![Total Downloads](https://poser.pugx.org/cache/simple-cache-bridge/downloads)](https://packagist.org/packages/cache/simple-cache-bridge)
 | [Taggable cache] | Decorator to make any PSR-6 cache taggable | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
-| [Tag interop] | Interfaces to support cache tagging. Soon to be PSR | [![Latest Stable Version](https://poser.pugx.org/cache/tag-interop/v/stable)](https://packagist.org/packages/cache/tag-interop) [![Total Downloads](https://poser.pugx.org/cache/tag-interop/downloads)](https://packagist.org/packages/cache/tag-interop)
+| [Tag interop] | Interfaces to support cache tagging. (Soon PSR) | [![Latest Stable Version](https://poser.pugx.org/cache/tag-interop/v/stable)](https://packagist.org/packages/cache/tag-interop) [![Total Downloads](https://poser.pugx.org/cache/tag-interop/downloads)](https://packagist.org/packages/cache/tag-interop)
 
 ## Contact
 
