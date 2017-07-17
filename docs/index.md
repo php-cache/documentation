@@ -201,6 +201,7 @@ Excluding our adapters, we have the following packages
 | [Adapter common] | The `AbstractCachePool` and `CacheItem` live here. | [![Latest Stable Version](https://poser.pugx.org/cache/adapter-common/v/stable)](https://packagist.org/packages/cache/adapter-common) [![Total Downloads](https://poser.pugx.org/cache/adapter-common/downloads)](https://packagist.org/packages/cache/adapter-common)
 | [CacheBundle] | Bundle to integrate **any** PSR-6 service with the<br>Symfony framework. | [![Latest Stable Version](https://poser.pugx.org/cache/cache-bundle/v/stable)](https://packagist.org/packages/cache/cache-bundle) [![Total Downloads](https://poser.pugx.org/cache/cache-bundle/downloads)](https://packagist.org/packages/cache/cache-bundle)
 | [Doctrine bridge] | A bridge from PSR-6 to DoctrineCache | [![Latest Stable Version](https://poser.pugx.org/cache/psr-6-doctrine-bridge/v/stable)](https://packagist.org/packages/cache/psr-6-doctrine-bridge) [![Total Downloads](https://poser.pugx.org/cache/psr-6-doctrine-bridge/downloads)](https://packagist.org/packages/cache/psr-6-doctrine-bridge)
+| [Encryption] | Encrypt data you store | [![Latest Stable Version](https://poser.pugx.org/cache/encryption-cache/v/stable)](https://packagist.org/packages/cache/encryption-cache) [![Total Downloads](https://poser.pugx.org/cache/encryption-cache/downloads)](https://packagist.org/packages/cache/encryption-cache)
 | [Hierarchical cache] | A trait and interface to support cache hierachy | [![Latest Stable Version](https://poser.pugx.org/cache/hierarchical-cache/v/stable)](https://packagist.org/packages/cache/hierarchical-cache) [![Total Downloads](https://poser.pugx.org/cache/hierarchical-cache/downloads)](https://packagist.org/packages/cache/hierarchical-cache)
 | [Integration tests] | Used to verify **any** PSR-6 implementation | [![Latest Stable Version](https://poser.pugx.org/cache/integration-tests/v/stable)](https://packagist.org/packages/cache/integration-tests) [![Total Downloads](https://poser.pugx.org/cache/integration-tests/downloads)](https://packagist.org/packages/cache/integration-tests)
 | [Namespaced cache] | Pool to support a namespace | [![Latest Stable Version](https://poser.pugx.org/cache/namespaced-cache/v/stable)](https://packagist.org/packages/cache/namespaced-cache) [![Total Downloads](https://poser.pugx.org/cache/namespaced-cache/downloads)](https://packagist.org/packages/cache/namespaced-cache)
@@ -227,6 +228,7 @@ You could also join us on [Gitter](https://gitter.im/php-cache/cache).
 [Chain]: https://github.com/php-cache/chain-adapter
 [Doctrine]: https://github.com/php-cache/doctrine-adapter
 [Doctrine bridge]: https://github.com/php-cache/doctrine-bridge
+[Encryption]: https://github.com/php-cache/encryption-cache
 [Filesystem]: https://github.com/php-cache/filesystem-adapter
 [Illuminate]: https://github.com/php-cache/illuminate-adapter
 [Hierarchical cache]: https://github.com/php-cache/hierarchical-cache
