@@ -15,7 +15,7 @@ If you are new to PSR-6 caching you may want to have a look at our [introduction
 
 ## Cache pool implementations
 
-There are plenty of adapters in this organisaion. Each of them lives in a different repository. Splitting them up in multiple
+There are plenty of adapters in this organization. Each of them lives in a different repository. Splitting them up in multiple
 packages complies with the *Common reuse principle* and makes it easier for the developer to follow the changes of a specific
 adapter. 
 
@@ -27,7 +27,7 @@ Each adapter has it own features. The table below lists all our adapters and the
 | [Apc] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/apc-adapter/v/stable)](https://packagist.org/packages/cache/apc-adapter) [![Total Downloads](https://poser.pugx.org/cache/apc-adapter/downloads)](https://packagist.org/packages/cache/apc-adapter)
 | [Apcu] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/apcu-adapter/v/stable)](https://packagist.org/packages/cache/apcu-adapter) [![Total Downloads](https://poser.pugx.org/cache/apcu-adapter/downloads)](https://packagist.org/packages/cache/apcu-adapter)
 | [Array] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/array-adapter/v/stable)](https://packagist.org/packages/cache/array-adapter) [![Total Downloads](https://poser.pugx.org/cache/array-adapter/downloads)](https://packagist.org/packages/cache/array-adapter)
-| Couchbase (via [Doctrine]) | Yes | No | | 
+| Couchbase 1.x (via [Doctrine]) | Yes | No | | 
 | [Filesystem](https://github.com/php-cache/filesystem-adapter) (via [Flysystem]) | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/filesystem-adapter/v/stable)](https://packagist.org/packages/cache/filesystem-adapter) [![Total Downloads](https://poser.pugx.org/cache/filesystem-adapter/downloads)](https://packagist.org/packages/cache/filesystem-adapter)
 | [Illuminate] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/illuminate-adapter/v/stable)](https://packagist.org/packages/cache/illuminate-adapter) [![Total Downloads](https://poser.pugx.org/cache/illuminate-adapter/downloads)](https://packagist.org/packages/cache/illuminate-adapter)
 | [Memcache] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/memcache-adapter/v/stable)](https://packagist.org/packages/cache/memcache-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcache-adapter/downloads)](https://packagist.org/packages/cache/memcache-adapter)
