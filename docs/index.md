@@ -13,6 +13,8 @@ framework integration libraries.
 
 If you are new to PSR-6 caching you may want to have a look at our [introduction](introduction.md).
 
+> Note: The PHP-cache organization has been pushing the limits of caching for many years. But currently we fall behind they quicker and better maintained [Symfony Cache](https://symfony.com/doc/current/components/cache.html).
+
 ## Cache pool implementations
 
 There are plenty of adapters in this organization. Each of them lives in a different repository. Splitting them up in multiple
