@@ -2,7 +2,7 @@
  
 In the late fall 2015 the [PHP-FIG](http://www.php-fig.org/) released a specification
 for caching. It is called [PSR-6](http://www.php-fig.org/psr/psr-6/). Like all the 
-PSRs, it is just a recommendation for improve interoperability. 
+PSRs, it is just a recommendation for improved interoperability. 
 
 ## Basic concepts
 
