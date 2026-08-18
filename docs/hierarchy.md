@@ -1,21 +1,30 @@
-# Hierarchical PSR-6 cache pool 
+# Hierarchical PSR-6 cache pools
 
-This is a PSR-6 implementation of a hierarchical cache architecture.  
+Hierarchical keys let an app invalidate a branch of related data with one deletion. They start with the `|` separator.
 
-If you have a cache key like `|users|:uid|followers|:fid|likes` where `:uid` and `:fid` are arbitrary integers, you
- may flush all followers by flushing `|users|:uid|followers`.
- 
+The following example stores one item for each follower:
+
 ```php
-$user = 4711;
-for ($i = 0; $i < 100; $i++) {
-  $item = $pool->getItem(sprintf('|users|%d|followers|%d|likes', $user, $i));
-  $item->set('Justin Bieber');
-  $pool->save($item);
+$userId = 42;
+
+for ($followerId = 0; $followerId < 100; ++$followerId) {
+    $key = sprintf('|users|%d|followers|%d|likes', $userId, $followerId);
+    $item = $pool->getItem($key);
+    $item->set(12);
+    $pool->save($item);
 }
-
-$pool->hasItem('|users|4711|followers|12|likes'); // True
-
-$pool->deleteItem('|users|4711|followers');
-
-$pool->hasItem('|users|4711|followers|12|likes'); // False
 ```
+
+Deleting the followers branch invalidates every item below it:
+
+```php
+$pool->deleteItem('|users|42|followers');
+
+$pool->hasItem('|users|42|followers|7|likes');
+```
+
+The final call returns `false`. Items outside the deleted branch remain available.
+
+Hierarchy uses internal path records. Backends that evict stale records automatically, such as Redis and Memcached, are a good fit for long-running applications.
+
+The Array, Illuminate, Memcached, Predis, Redis, and Void adapters implement `HierarchicalPoolInterface`.

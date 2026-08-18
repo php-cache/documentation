@@ -1,0 +1,6 @@
+extends: existence
+message: "Use a comma, period, or parentheses instead of a dash."
+level: error
+nonword: true
+tokens:
+  - "[\u2013\u2014]"

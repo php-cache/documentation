@@ -1,108 +1,106 @@
-# Hierarchical PSR-6 cache pool 
+# Implementing hierarchical cache pools
 
-*Note: You will find the best performance when using a driver that automatically purges stale records. e.g. Memcache(d) or Redis*
+The `cache/hierarchical-cache` package provides `HierarchicalPoolInterface` and `HierarchicalCachePoolTrait`. The trait maps a public hierarchy path to an internal storage key.
 
-The trait for hierarchy pools creates a form of tag for each level in the hierarchy. That means that for every *input 
-key* there are multiple *path keys*. The *path keys* are used to fetch a path value in the storage which is used to 
-create a storage key for the `CacheItem`. The idea is complex, but easy to use. Consider this example: 
+Use a backend that can increment path records atomically. Automatic eviction of stale records also helps control storage growth.
+
+## Add the interface and trait
 
 ```php
-// Input key is form the user
-$inputKey = '|foo|bar';
-$pathKey1 = 'path!foo';
-$pathKey2 = 'path!foo![foo_idx]!bar';
-$storageKey = 'foo![foo_idx]!bar![bar_idx]';
-
-$this->storage->set($storageKey, $item);
-```
-
-To clear the input key `|foo` you need to update `foo_idx` simply by increasing the value by one. The implementation
-becomes a bit more complex when you add support for tags but luckily there is a trait to help you with this. 
-
-To implement hierarchy cache, there are four things you need to do: 
-
-* Implement `HierarchicalPoolInterface` and use `HierarchicalCachePoolTrait`
-* Use `HierarchicalCachePoolTrait::getHierarchyKey($key)`
-* Delete items better
-* Implement `HierarchicalCachePoolTrait::getValueFormStore($key)`
-
-
-## Implement the interface and use the trait
- 
-The trait has two protected functions `getHierarchyKey($inputKey)` and `clearHierarchyKeyCache()` and one abstract
- function `getValueFormStore($key)`. We will talk about those later. 
- 
-```php
-
+use Cache\Adapter\Common\AbstractCachePool;
 use Cache\Hierarchy\HierarchicalCachePoolTrait;
 use Cache\Hierarchy\HierarchicalPoolInterface;
 
-class MyCachePool extends AbstractCachePool implements HierarchicalPoolInterface
+abstract class MyCachePool extends AbstractCachePool implements HierarchicalPoolInterface
 {
-  use HierarchicalCachePoolTrait;
-    
-  // ..
+    use HierarchicalCachePoolTrait;
 }
 ```
 
-## Use HierarchicalCachePoolTrait::getHierarchyKey
+The class still needs the storage and tag hooks required by `AbstractCachePool`.
 
-To convert an input key to a storage key you need to run `HierarchicalCachePoolTrait::getHierarchyKey($key)`. It will 
-create the storage key for you. You could give in a tagged key like `foo:tagHash`. 
+## Translate every item key
+
+Call `getHierarchyKey()` before reading, writing, or deleting a stored item. Non-hierarchical keys pass through unchanged.
+
+For adapters based on `AbstractCachePool`, translate keys in these hooks:
+
+* `fetchObjectFromCache()`
+* `storeItemInCache()`
+* `clearOneObjectFromCache()`
+
+For example, a store hook begins with this translation:
 
 ```php
-public function getItem($key)
-{
-  $storageKey = $this->getHierarchyKey($key);
+use Cache\Adapter\Common\AbstractCachePool;
+use Cache\Adapter\Common\PhpCacheItem;
+use Cache\Hierarchy\HierarchicalCachePoolTrait;
+use Cache\Hierarchy\HierarchicalPoolInterface;
 
-  // ...
+abstract class MyCachePool extends AbstractCachePool implements HierarchicalPoolInterface
+{
+    use HierarchicalCachePoolTrait;
+
+    protected function storeItemInCache(PhpCacheItem $item, ?int $ttl): bool
+    {
+        $storageKey = $this->getHierarchyKey($item->getKey());
+
+        return $this->storage->write($storageKey, $item, $ttl);
+    }
 }
 ```
 
-You should do this for the following functions: 
+The example assumes the adapter's storage client provides `write()`.
 
-* getItem
-* getItems
-* hasItem
-* clear
-* deleteItem
-* deleteItems
+## Read path records directly
 
-
-# Delete items better
-
-When you are clearing the cache there are quite a few things to think about. You need to update the stored value for 
-the path key and also clear the local hierarchy cache key storage. To get a path key you can use the second argument of
-`HierarchicalCachePoolTrait::getHierarchyKey($inputKey, $pathKey)` that is passed by reference. 
+The trait calls `getDirectValue()` when it resolves a hierarchy path. This method must read the raw backend key without calling `getHierarchyKey()` again.
 
 ```php
-public function deleteItem($key)
+abstract class MyCachePool
 {
-  // Get storage key and path key
-  $pathKey = null;
-  $storageKey = $this->getHierarchyKey($key, $pathKey);
-  
-  // Update index for the path key
-  $pathIndex = $this->storage->get($pathKey);
-  $this->storage->set($pathKey, $pathIndex + 1);
-  
-  // Clear the local key cache
-  $this->clearHierarchyKeyCache();
-  
-  // ..
-  
-  $this->storage->delete($storageKey);
+    public function getDirectValue(string $name): mixed
+    {
+        return $this->storage->get($name);
+    }
 }
 ```
 
-## Implement getValueFormStore($key)
+The required method name is `getDirectValue()`. Older documentation called it `getValueFormStore()`, but that method no longer exists.
 
-The trait has one abstract function `HierarchicalCachePoolTrait::getValueFormStore($key)` which is used to get the 
-value for a path key. This function should just fetch data from the storage without modifications. 
+## Invalidate a branch
+
+Pass a second argument to `getHierarchyKey()` when deleting an item. The trait writes the final path record into that argument.
+
+For a hierarchical key, atomically increment the path record. This changes the derived storage keys for the branch and every descendant.
 
 ```php
- protected function getValueFormStore($key)
- {
-   return $this->storage->get($key);
- }
+abstract class MyCachePool
+{
+    protected function clearOneObjectFromCache(string $key): bool
+    {
+        $pathKey = null;
+        $storageKey = $this->getHierarchyKey($key, $pathKey);
+        $generationAdvanced = true;
+
+        if (null !== $pathKey) {
+            $generationAdvanced = $this->storage->increment($pathKey);
+        }
+
+        $this->clearHierarchyKeyCache();
+        $deleted = $this->storage->delete($storageKey);
+
+        return $generationAdvanced && $deleted;
+    }
+}
 ```
+
+The storage client must initialize a missing path record to a numeric value before incrementing it. A non-hierarchical key leaves `$pathKey` as `null`.
+
+Return `false` when the backend cannot advance the path record. Otherwise, callers can receive a successful deletion while descendant entries remain reachable.
+
+Call `clearHierarchyKeyCache()` after clearing the entire backend as well. Otherwise, one PHP process can keep stale derived keys in memory.
+
+## Test the implementation
+
+Extend `HierarchicalCachePoolTest` from `cache/integration-tests:^1.0`. Run it together with the PSR-6 and tagging suites.

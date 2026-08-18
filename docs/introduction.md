@@ -1,82 +1,66 @@
-# PSR-6 Cache Introduction
- 
-In the late fall 2015 the [PHP-FIG](http://www.php-fig.org/) released a specification
-for caching. It is called [PSR-6](http://www.php-fig.org/psr/psr-6/). Like all the 
-PSRs, it is just a recommendation for improve interoperability. 
+# Introduction to PSR caching
 
-## Basic concepts
+[PSR-6](https://www.php-fig.org/psr/psr-6/) defines cache items and cache pools. [PSR-16](https://www.php-fig.org/psr/psr-16/) defines a smaller key and value API called Simple Cache.
 
-The PSR-6 defines two interfaces; a CachePool and a CacheItem. You interact with the 
-pool to get an item. You will never create an item yourself. 
+PHP Cache version 2 implements version 3 of both interface packages and requires PHP 8.2.
 
-```php
-// Create a pool
-$pool = new ApcuCachePool();
+## PSR-6 basics
 
-// Get an item (existing or new)
-$item = $pool->getItem('cache_key');
-
-// Set some values and store
-$item->set('value');
-$item->expiresAfter(60);
-$pool->save($item);
-
-// Verify existence
-$pool->hasItem('cache_key'); // True
-$item->isHit(); // True
-
-// Get stored values
-$myValue = $item->get();
-echo $myValue; // "value"
-
-// Delete
-$pool->deleteItem('cache_key');
-$pool->hasItem('cache_key'); // False
-```
- 
- 
-*Note: A cache item can not be transferred from one pool to another.*
-
-## Cache keys
-
-According to PSR-6 the following characters could be used in a valid cache key; 
-`A-Z`, `a-z`, `0-9`, `_`, and `.`. Some characters are forbidden like: `{}()/\@:`. If
-you use any of the forbidden characters you will get an exception. Other characters
-(like `-`) are not forbidden nor valid. It is up to the implementation if they support
-that character or not. 
-
-**We recommend to always use valid characters in the cache key.**
-
-To make sure you do not use an invalid character by mistake, you should hash your keys. 
- 
-```php
-$cacheKey = sha1($_SERVER['REQUEST_URI']);
-```
-
-## Choosing a pool
-
-What cache pool you  want to use is up to you. As you can see in the 
-[table on the startpage](index.md#cache-pool-implementations), different pools have
-different features. Commonly used pools are: 
-
-* Apcu
-* Array
-* Memcached
-* Redis
-
-The steps to create a pool varies from pool to pool. Look at the pool's repository
-to see how to create it. Generally you create a connection to a cache implementation
-and then give it to the pool. See a Memcached example: 
+Apps request items from a pool. The pool creates new items on a miss, so app code should never construct cache items directly.
 
 ```php
-$client = new \Memcached();
-$client->addServer('localhost', 11211);
-$pool = new MemcachedCachePool($client);
+use Cache\Adapter\PHPArray\ArrayCachePool;
+
+$pool = new ArrayCachePool();
+$item = $pool->getItem('report.current');
+
+if (!$item->isHit()) {
+    $item->set(buildCurrentReport());
+    $item->expiresAfter(60);
+    $pool->save($item);
+}
+
+$report = $item->get();
 ```
 
+A cache item belongs to the pool that created it. Do not pass an item to another pool's `save()` or `saveDeferred()` method.
 
-## Features
+## PSR-16 basics
 
-The PHP-Cache organization has built some more features on top of PSR-6. Look at our
-documentation for [hierarchy](hierarchy.md) or [namespace](namespace.md) for more
-information.
+PHP Cache adapters also expose the PSR-16 `CacheInterface`:
+
+```php
+$report = $cache->get('report.current');
+
+if (null === $report) {
+    $report = buildCurrentReport();
+    $cache->set('report.current', $report, 60);
+}
+```
+
+Use a distinct sentinel as the default when `null` is a valid cached value.
+
+## Portable cache keys
+
+PSR-6 and PSR-16 implementations must support letters, numbers, underscores, and periods. The characters `{ } ( ) / \\ @ :` are reserved.
+
+Implementations may accept other characters, but portable applications should stay within the required set. Hash long or user-controlled input before using it as a key.
+
+Numeric-looking strings, such as `'123'`, are valid keys. Batch reads preserve the string key while you iterate their returned `iterable`.
+
+Converting that `iterable` to an array may turn the key into an integer under PHP's array-key rules.
+
+```php
+$cacheKey = 'page.'.hash('sha256', $_SERVER['REQUEST_URI']);
+```
+
+## Choosing an adapter
+
+The [adapter table](index.md#cache-adapters) shows available backends and hierarchy support.
+
+* Use APCu for a fast shared-memory cache on one host.
+* Use Array for tests and short-lived scripts.
+* Use Memcached for a distributed volatile cache.
+* Use Redis or Predis when you need shared storage and hierarchical keys.
+
+Each adapter README documents its client setup and extra runtime requirements.

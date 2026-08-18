@@ -1,87 +1,99 @@
-# PSR-6 Integration tests 
+# Cache integration tests
 
-To make sure your implementation of PSR-6 is correct you should use this test suite. This will work for **any** PSR-6
-cache pool. The tests will make sure your pool work according to the PSR-6 specification. 
+The `cache/integration-tests` package verifies PSR-6, PSR-16, tag, and hierarchy behavior. Version 1 requires PHP 8.2, PHPUnit 11, the v3 PSR cache interfaces, and `cache/tag-interop` 4.
 
-## Usage
-
-Install the current stable version of this library.
+## Installation
 
 ```bash
-composer require --dev cache/integration-tests
+composer require --dev cache/integration-tests:^1.0
 ```
 
-Create a test that looks like this: 
+Use a compatible PHPUnit version from the package's Composer constraints.
+
+## Test a PSR-6 pool
+
 ```php
 use Cache\IntegrationTests\CachePoolTest;
+use Psr\Cache\CacheItemPoolInterface;
 
-class PoolIntegrationTest extends CachePoolTest
+final class PoolIntegrationTest extends CachePoolTest
 {
-    public function createCachePool()
+    public function createCachePool(): CacheItemPoolInterface
     {
-        return new CachePool();
+        return new MyCachePool();
     }
 }
 ```
 
+Return a fresh pool for each test setup. The suite clears it during teardown.
 
-## Versioning
-
-The integration tests package follow semantic versioning like all the other packages in PHP-Cache. For each new test
-added we update the minor version. If there is a bugfix in an existing test, bump the minor version. 
-
-This means that you should specify a fix version of the integration tests in your require-dev.
-You should not use `dev-master`. Instead you should specify `0.7.0` or even better `^0.7.0`. 
-
-## Skipping tests
-
-You are able to skip some tests that your implementation cannot support. To skip a test, add the test name and a reason 
-to a class property like this: 
+## Test a PSR-16 cache
 
 ```php
-use Cache\IntegrationTests\CachePoolTest;
+use Cache\IntegrationTests\SimpleCacheTest;
+use Psr\SimpleCache\CacheInterface;
 
-class VoidAdapterIntegrationTest extends CachePoolTest
+final class SimpleCacheIntegrationTest extends SimpleCacheTest
 {
-    protected $skippedTests = [
-      'testGetItem' => 'Void adapter does not save items.',
-      'testIsHit'   => 'Void adapter does not save items.',
-    ];
-
-    public function createCachePool()
+    public function createSimpleCache(): CacheInterface
     {
-        return new CachePool();
+        return new MySimpleCache();
     }
 }
 ```
 
+Override `advanceTime()` when the backend offers a test clock. This avoids real sleeps in expiration tests.
 
-## Other integration tests
-
-### Test a tagging pool
+## Test tags
 
 ```php
 use Cache\IntegrationTests\TaggableCachePoolTest;
+use Cache\TagInterop\TaggableCacheItemPoolInterface;
 
-class PoolIntegrationTest extends TaggableCachePoolTest
+final class TagIntegrationTest extends TaggableCachePoolTest
 {
-    public function createCachePool()
+    public function createCachePool(): TaggableCacheItemPoolInterface
     {
-        return new CachePool();
+        return new MyTaggableCachePool();
     }
 }
 ```
 
-### Test a hierarchical pool
+## Test hierarchical keys
 
 ```php
 use Cache\IntegrationTests\HierarchicalCachePoolTest;
+use Psr\Cache\CacheItemPoolInterface;
 
-class PoolIntegrationTest extends HierarchicalCachePoolTest
+final class HierarchyIntegrationTest extends HierarchicalCachePoolTest
 {
-    public function createCachePool()
+    public function createCachePool(): CacheItemPoolInterface
     {
-        return new CachePool();
+        return new MyHierarchicalCachePool();
     }
 }
 ```
+
+## Skip unsupported behavior
+
+Each base class exposes a typed map of test names to reasons. Skip tests only for documented backend limitations.
+
+```php
+use Cache\IntegrationTests\CachePoolTest;
+use Psr\Cache\CacheItemPoolInterface;
+
+final class PoolWithSkippedExpirationTest extends CachePoolTest
+{
+    /** @var array<string, string> */
+    protected array $skippedTests = [
+        'testExpiration' => 'This backend does not support expiration.',
+    ];
+
+    public function createCachePool(): CacheItemPoolInterface
+    {
+        return new MyCachePool();
+    }
+}
+```
+
+Do not use `dev-master`. Pin the stable major so new breaking test APIs arrive only in a deliberate dependency upgrade.

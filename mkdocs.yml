@@ -1,10 +1,13 @@
-site_name: PHP-Cache Documentation
-copyright: © 2015 PHP Cache Team
+site_name: PHP Cache Documentation
+site_url: https://www.php-cache.com/
+repo_url: https://github.com/php-cache/documentation
+copyright: Copyright 2015-2026 PHP Cache contributors
 theme: readthedocs
+strict: true
 extra_css:
-    - css/extra.css
+  - css/extra.css
 markdown_extensions:
-    - toc:
-          permalink: true
-    - sane_lists
-    - admonition
+  - toc:
+      permalink: true
+  - sane_lists
+  - admonition

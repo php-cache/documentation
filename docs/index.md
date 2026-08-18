@@ -1,250 +1,191 @@
-# PHP Cache 
+# PHP Cache
 
-<img align="right" src="https://raw.githubusercontent.com/php-cache/documentation/master/logos/php-cache-logo-256.png" />
+![PHP Cache logo](https://raw.githubusercontent.com/php-cache/documentation/master/logos/php-cache-logo-256.png)
 
+PHP Cache provides small, interoperable caching packages for PHP. Version 2 requires PHP 8.2. PSR-6 adapters use `psr/cache` 3, and PSR-16 implementations use `psr/simple-cache` 3.
 
-The PHP Cache organization is dedicated to providing solid, powerful, flexible, and lightweight caching libraries for PHP
-projects. All of the adapters we have created are [PSR-6](http://www.php-fig.org/psr/psr-6/) and [PSR-16](http://www.php-fig.org/psr/psr-16/) 
-compliant. If you are a library implementer, we even have a [repository of tests ](https://github.com/php-cache/integration-tests) 
-to help you meet the PSR specification.
+Start with the [PSR cache introduction](introduction.md) if you are new to PSR-6 or PSR-16. Cache implementers can use the [integration test suite](implementing-cache-pools/integration-tests.md).
 
-Below you will find information about what features our libraries offer, and what adapters we have. You can also find out
-framework integration libraries.
+## Cache adapters
 
-If you are new to PSR-6 caching you may want to have a look at our [introduction](introduction.md).
+Each adapter is available as a separate Composer package. All PHP Cache adapters support tags. Some also support hierarchical keys.
 
-> Note: The PHP-cache organization has been pushing the limits of caching for many years. But currently we fall behind the quicker and better maintained [Symfony Cache](https://symfony.com/doc/current/components/cache.html).
+| Adapter | Composer package | Hierarchy |
+| --- | --- | --- |
+| [APCu](https://github.com/php-cache/apcu-adapter) | `cache/apcu-adapter` | No |
+| [Array](https://github.com/php-cache/array-adapter) | `cache/array-adapter` | Yes |
+| [Chain](https://github.com/php-cache/chain-adapter) | `cache/chain-adapter` | No |
+| [Doctrine](https://github.com/php-cache/doctrine-adapter) | `cache/doctrine-adapter` | No |
+| [Filesystem](https://github.com/php-cache/filesystem-adapter) | `cache/filesystem-adapter` | No |
+| [Illuminate](https://github.com/php-cache/illuminate-adapter) | `cache/illuminate-adapter` | Yes |
+| [Memcache](https://github.com/php-cache/memcache-adapter) | `cache/memcache-adapter` | No |
+| [Memcached](https://github.com/php-cache/memcached-adapter) | `cache/memcached-adapter` | Yes |
+| [MongoDB](https://github.com/php-cache/mongodb-adapter) | `cache/mongodb-adapter` | No |
+| [Predis](https://github.com/php-cache/predis-adapter) | `cache/predis-adapter` | Yes |
+| [Redis](https://github.com/php-cache/redis-adapter) | `cache/redis-adapter` | Yes |
+| [Void](https://github.com/php-cache/void-adapter) | `cache/void-adapter` | Yes |
 
-## Cache pool implementations
-
-There are plenty of adapters in this organization. Each of them lives in a different repository. Splitting them up in multiple
-packages complies with the *Common reuse principle* and makes it easier for the developer to follow the changes of a specific
-adapter. 
-
-Each adapter has it own features. The table below lists all our adapters and their features. 
-
-
-| Adapter | Tagging | Hierarchy* | Badges |
-| ------- | ------- | ---------- | ------ |
-| [Apc] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/apc-adapter/v/stable)](https://packagist.org/packages/cache/apc-adapter) [![Total Downloads](https://poser.pugx.org/cache/apc-adapter/downloads)](https://packagist.org/packages/cache/apc-adapter)
-| [Apcu] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/apcu-adapter/v/stable)](https://packagist.org/packages/cache/apcu-adapter) [![Total Downloads](https://poser.pugx.org/cache/apcu-adapter/downloads)](https://packagist.org/packages/cache/apcu-adapter)
-| [Array] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/array-adapter/v/stable)](https://packagist.org/packages/cache/array-adapter) [![Total Downloads](https://poser.pugx.org/cache/array-adapter/downloads)](https://packagist.org/packages/cache/array-adapter)
-| Couchbase 1.x (via [Doctrine]) | Yes | No | | 
-| [Filesystem](https://github.com/php-cache/filesystem-adapter) (via [Flysystem]) | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/filesystem-adapter/v/stable)](https://packagist.org/packages/cache/filesystem-adapter) [![Total Downloads](https://poser.pugx.org/cache/filesystem-adapter/downloads)](https://packagist.org/packages/cache/filesystem-adapter)
-| [Illuminate] | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/illuminate-adapter/v/stable)](https://packagist.org/packages/cache/illuminate-adapter) [![Total Downloads](https://poser.pugx.org/cache/illuminate-adapter/downloads)](https://packagist.org/packages/cache/illuminate-adapter)
-| [Memcache] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/memcache-adapter/v/stable)](https://packagist.org/packages/cache/memcache-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcache-adapter/downloads)](https://packagist.org/packages/cache/memcache-adapter)
-| [Memcached] | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/memcached-adapter/v/stable)](https://packagist.org/packages/cache/memcached-adapter) [![Total Downloads](https://poser.pugx.org/cache/memcached-adapter/downloads)](https://packagist.org/packages/cache/memcached-adapter)
-| [MongoDB] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/mongodb-adapter/v/stable)](https://packagist.org/packages/cache/mongodb-adapter) [![Total Downloads](https://poser.pugx.org/cache/mongodb-adapter/downloads)](https://packagist.org/packages/cache/mongodb-adapter)
-| [Predis] | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/predis-adapter/v/stable)](https://packagist.org/packages/cache/predis-adapter) [![Total Downloads](https://poser.pugx.org/cache/predis-adapter/downloads)](https://packagist.org/packages/cache/predis-adapter)
-| [Redis] | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/redis-adapter/v/stable)](https://packagist.org/packages/cache/redis-adapter) [![Total Downloads](https://poser.pugx.org/cache/redis-adapter/downloads)](https://packagist.org/packages/cache/redis-adapter)
-| Riak (via [Doctrine])| Yes | No | | 
-| SQLite3 (via [Doctrine])| Yes | No | | 
-| [Void] | Yes | Yes | [![Latest Stable Version](https://poser.pugx.org/cache/void-adapter/v/stable)](https://packagist.org/packages/cache/void-adapter) [![Total Downloads](https://poser.pugx.org/cache/void-adapter/downloads)](https://packagist.org/packages/cache/void-adapter)
-| WinCache (via [Doctrine]) | Yes | No | | 
-| Xcache (via [Doctrine]) | Yes | No | | 
-| ZendData (via [Doctrine]) | Yes | No | | 
-| | | | | 
-| [Chain] | Yes | | [![Latest Stable Version](https://poser.pugx.org/cache/chain-adapter/v/stable)](https://packagist.org/packages/cache/chain-adapter) [![Total Downloads](https://poser.pugx.org/cache/chain-adapter/downloads)](https://packagist.org/packages/cache/chain-adapter)
-| [Doctrine] | Yes | No | [![Latest Stable Version](https://poser.pugx.org/cache/doctrine-adapter/v/stable)](https://packagist.org/packages/cache/doctrine-adapter) [![Total Downloads](https://poser.pugx.org/cache/doctrine-adapter/downloads)](https://packagist.org/packages/cache/doctrine-adapter)
-
-\* *Hierarchy store lots of extra items in cache that are never actively removed. Some implementations of cache storages 
-like Redis and Memcache will automatically remove these items when they're stale or no longer used. That is why hierarchy
-will work better on such cache storages.*
-  
-
-
-### Chain adapter
-
-We also have a chain adapter where you can chain multiple pool together. It is great if you have a fast storage with limited 
-memory and a slower storage with loads of memory. 
-
-### Doctrine adapter
-
-The doctrine adapter is a PSR-6 adapter that wraps a `Doctrine\Common\Cache\Cache` object. With this adapter you can use 
-storages like Riak and WinCache which currently do not have any PHP Cache adapters. 
-
-## Installation
-
-Use composer to install any of the adapters above. Some adapters may require configuration before they can be used. 
-Refer to the adapter's Github page to see how they are configured. You could also use the Symfony [AdapterBundle] to 
-configure the adapters. 
+Install only the adapter your app needs:
 
 ```bash
-composer require cache/[any]-adapter
+composer require cache/redis-adapter:^2.0
 ```
 
-You can also install all of the adapters with the `cache/cache`
+The `cache/cache` metapackage installs the complete adapter collection:
 
 ```bash
-composer require cache/cache
+composer require cache/cache:^2.0
 ```
 
-### Requirements
+Some adapters also require a PHP extension or client library. Check the adapter README before installation.
 
-Unless other is specified, all adapters support PHP version `^5.5` and `^7.0`. Most adapters do also have requirements
-on PHP extension. Like the Redis adapter requires `ext-redis`. 
+## Upgrading to version 2
 
-## Features
+Do not run version 2 workers alongside older workers when they share an affected cache store.
 
-#### Tagging
+Version 2 changes these internal formats:
 
-Tags is used to control the invalidation of items. 
+* APCu stores native arrays instead of serialized strings.
+* Redis and Predis store tag indexes as sets instead of lists.
+* Prefix and namespace components use reversible `_xHH_` byte encoding. Bytes outside `[A-Za-z0-9_.]` and literal lowercase `_x` sequences are transformed.
+* Namespaced public key components preserve ordinary backend-supported bytes, including `-`, `%`, and non-ASCII text. Only `|`, `!`, and literal lowercase `_x` sequences are transformed.
+* Namespaced tag indexes are isolated in version 2. Clear namespaced caches containing tagged items before upgrading or rolling back.
+* Public hierarchy keys use a separate storage path. Clear namespaced caches containing hierarchy keys before upgrading or rolling back.
+
+Clear a namespaced cache before upgrading or rolling back when a namespace contains bytes outside `[A-Za-z0-9_.]` or a lowercase `_x` sequence. Clear it when a public key contains `|`, `!`, or a lowercase `_x` sequence.
+
+Clear a prefixed cache when its prefix contains bytes outside `[A-Za-z0-9_.]` or a lowercase `_x` sequence.
+
+Generic PSR-6 namespace decorators persist a random generation before deriving storage keys. They probe alternate metadata keys instead of overwriting an unrelated value.
+
+Use this deployment sequence:
+
+1. Stop or drain every old worker.
+2. Clear each affected APCu, Redis, Predis, namespaced, or prefixed cache.
+3. Deploy version 2 and restart the workers.
+
+Use the same sequence before rolling back. No other cache formats change unless an adapter README says otherwise.
+
+Update these client libraries before installing version 2:
+
+* The Filesystem adapter supports Flysystem 2 and 3. It no longer supports Flysystem 1.
+* The Illuminate adapter supports `illuminate/cache` 11 through 13.
+* The Predis adapter supports Predis 2 and 3. It no longer supports Predis 1.
+
+Custom adapters that extend `AbstractCachePool` must add version 2's native types. Follow the [custom adapter upgrade guide](implementing-cache-pools/adapter-common.md#upgrading-a-custom-adapter).
+
+## Tags
+
+Tags let an app invalidate related items without knowing every cache key.
 
 ```php
-$item = $pool->getItem('tobias');
-$item->set('value')->setTags(['tag0', 'tag1'])
-$pool->save($item);
+$product = $pool->getItem('product.42');
+$product->set(['name' => 'Desk'])->setTags(['products', 'featured']);
+$pool->save($product);
 
-$item = $pool->getItem('aaron');
-$item->set('value')->setTags(['tag0']);
-$pool->save($item);
+$pool->invalidateTag('products');
 
-// Remove everything tagged with 'tag1'
-$pool->invalidateTags(['tag1']);
-$pool->getItem('tobias')->isHit(); // false
-$pool->getItem('aaron')->isHit(); // true
-
-$item = $pool->getItem('aaron');
-echo $item->getPreviousTags(); // array('tag0')
-
-// No tags will be saved again. This is the same as saving
-// an item with no tags.
-$pool->save($item);
+$pool->getItem('product.42')->isHit();
 ```
 
-#### Hierarchy
+The final call returns `false` after invalidation. Pools and items expose tags through the interfaces in `cache/tag-interop`.
 
-Think of a hierarchy like a file system. If you remove a folder "Foo", all items and folders in "Foo" will also be removed. 
-A hierarchical cache key must start with a pipe ("|").
+## Hierarchical keys
 
+A hierarchical key starts with `|`. Deleting a parent path invalidates every cached descendant.
 
 ```php
-$pool->hasItem('|users|4711|followers|12|likes'); // True
-$pool->deleteItem('|users|4711|followers');
-$pool->hasItem('|users|4711|followers|12|likes'); // False
-```
-
-#### Namespace
-
-Namespace can be used to separate the storage of different systems in the cache. This allows different sections to be cleared
-on an individual level, while also preventing overlapping keys.
-
-```php
-$pool = new ArrayCachePool();
-
-$namespaceFoo = new NamespacedCachePool($pool, 'foo');
-$item = $namespaceFoo->getItem('key')->set('value');
-$namespaceFoo->save($item);
-
-$namespaceBar = new NamespacedCachePool($pool, 'bar');
-$namespaceBar->hasItem('key'); // False
-$item = $namespaceBar->getItem('key')->set('value');
-$namespaceBar->save($item);
-
-$namespaceBar->hasItem('key'); // True
-$namespaceFoo->deleteItem('key');
-$namespaceFoo->hasItem('key'); // False
-$namespaceBar->hasItem('key'); // True
-
-$namespaceFoo->clear();
-$namespaceBar->hasItem('key'); // True
-```
-
-#### Prefix
-
-A prefix will help you to avoid cache key collisions. The prefixed cache pool supports any PSR-6 
-cache implementations. The PrefixedCachePool differs from the NamespacedCachePool in two aspects: 
-
-1) You could still have conflicts if one cache key includes the prefix
-2) When clearing the cache all cache items will be cleared, not only the prefixed ones. 
-
-```php
-$pool = new ArrayCachePool();
-
-$prefixedFoo = new PrefixedCachePool($pool, 'foo');
-$item = $prefixedFoo->getItem('key')->set('value');
-$prefixedFoo->save($item);
-
-$pool->hasItem('key'); // False
-$item = $pool->getItem('key')->set('value');
+$item = $pool->getItem('|users|42|followers|7|likes');
+$item->set(12);
 $pool->save($item);
 
-$pool->hasItem('key'); // True
-$prefixedFoo->deleteItem('key');
-$prefixedFoo->hasItem('key'); // False
-$pool->hasItem('key'); // True
+$pool->deleteItem('|users|42|followers');
 
-$prefixedFoo->clear();
-$pool->hasItem('key'); // False
+$pool->hasItem('|users|42|followers|7|likes');
 ```
 
+The final call returns `false`. Read the [hierarchy guide](hierarchy.md) for details.
 
-## Framework integration
+## Namespaces and prefixes
 
-#### Symfony
+`NamespacedCachePool` isolates one logical cache inside any PSR-6 pool. Its `clear()` method invalidates only that namespace.
 
-There are two Symfony bundles; [AdapterBundle] and [CacheBundle]. 
+`PrefixedCachePool` works with any PSR-6 pool. Its `clear()` method clears the entire wrapped pool. Read the [namespace guide](namespace.md) before choosing between them.
 
-The AdapterBundle is used to configure and register a PSR-6 cache pool as a Symfony service. The  CacheBundle is used to 
-integrate **any** PSR-6 cache service with the framework. It supports session cache, doctrine cache, validation cache and 
-many more. 
+Use each decorator's `create()` factory when the wrapped pool supports tags. The factory preserves taggable items and forwards tag invalidation.
 
-We would LOVE to see integration with Zend, Laravel, Yii, Cake, and even Code Igniter. If you would like to contribute, 
-we would love to see your code.
+## Chain pools
 
-## Organisation overview
+`CachePoolChain` reads through a list of PHP Cache pools and backfills earlier pools after a hit. Writes and tag invalidations run against each active pool.
 
-Excluding our adapters, we have the following packages
+The chain implements both PSR-6 and PSR-16. Each member must implement `Cache\Adapter\Common\PhpCachePool` so the chain can transfer items during backfills.
 
-| Name | Description | Badges |
-| ---- | ----------- | ------ |
-| [Cache] | Base Cache Repository. Contains all adapters. | [![Latest Stable Version](https://poser.pugx.org/cache/cache/v/stable)](https://packagist.org/packages/cache/cache) [![Total Downloads](https://poser.pugx.org/cache/cache/downloads)](https://packagist.org/packages/cache/cache)
-| [AdapterBundle] | Bundle to register adapters to services. | [![Latest Stable Version](https://poser.pugx.org/cache/adapter-bundle/v/stable)](https://packagist.org/packages/cache/adapter-bundle) [![Total Downloads](https://poser.pugx.org/cache/adapter-bundle/downloads)](https://packagist.org/packages/cache/adapter-bundle)
-| [Adapter common] | The `AbstractCachePool` and `CacheItem` live here. | [![Latest Stable Version](https://poser.pugx.org/cache/adapter-common/v/stable)](https://packagist.org/packages/cache/adapter-common) [![Total Downloads](https://poser.pugx.org/cache/adapter-common/downloads)](https://packagist.org/packages/cache/adapter-common)
-| [CacheBundle] | Bundle to integrate **any** PSR-6 service with the<br>Symfony framework. | [![Latest Stable Version](https://poser.pugx.org/cache/cache-bundle/v/stable)](https://packagist.org/packages/cache/cache-bundle) [![Total Downloads](https://poser.pugx.org/cache/cache-bundle/downloads)](https://packagist.org/packages/cache/cache-bundle)
-| [Doctrine bridge] | A bridge from PSR-6 to DoctrineCache | [![Latest Stable Version](https://poser.pugx.org/cache/psr-6-doctrine-bridge/v/stable)](https://packagist.org/packages/cache/psr-6-doctrine-bridge) [![Total Downloads](https://poser.pugx.org/cache/psr-6-doctrine-bridge/downloads)](https://packagist.org/packages/cache/psr-6-doctrine-bridge)
-| [Encryption] | Encrypt data you store | [![Latest Stable Version](https://poser.pugx.org/cache/encryption-cache/v/stable)](https://packagist.org/packages/cache/encryption-cache) [![Total Downloads](https://poser.pugx.org/cache/encryption-cache/downloads)](https://packagist.org/packages/cache/encryption-cache)
-| [Hierarchical cache] | A trait and interface to support cache hierachy | [![Latest Stable Version](https://poser.pugx.org/cache/hierarchical-cache/v/stable)](https://packagist.org/packages/cache/hierarchical-cache) [![Total Downloads](https://poser.pugx.org/cache/hierarchical-cache/downloads)](https://packagist.org/packages/cache/hierarchical-cache)
-| [Integration tests] | Used to verify **any** PSR-6 implementation | [![Latest Stable Version](https://poser.pugx.org/cache/integration-tests/v/stable)](https://packagist.org/packages/cache/integration-tests) [![Total Downloads](https://poser.pugx.org/cache/integration-tests/downloads)](https://packagist.org/packages/cache/integration-tests)
-| [Namespaced cache] | Pool to support a namespace | [![Latest Stable Version](https://poser.pugx.org/cache/namespaced-cache/v/stable)](https://packagist.org/packages/cache/namespaced-cache) [![Total Downloads](https://poser.pugx.org/cache/namespaced-cache/downloads)](https://packagist.org/packages/cache/namespaced-cache)
-| [Prefixed cache] | Pool to support a prefix | [![Latest Stable Version](https://poser.pugx.org/cache/prefixed-cache/v/stable)](https://packagist.org/packages/cache/prefixed-cache) [![Total Downloads](https://poser.pugx.org/cache/prefixed-cache/downloads)](https://packagist.org/packages/cache/prefixed-cache)
-| [Session handler] | Implementation of `\SessionHandlerInterface` | [![Latest Stable Version](https://poser.pugx.org/cache/session-handler/v/stable)](https://packagist.org/packages/cache/session-handler) [![Total Downloads](https://poser.pugx.org/cache/session-handler/downloads)](https://packagist.org/packages/cache/session-handler)
-| [Simple Cache Bridge] | Bridge from PSR-6 to PSR-16 SimpleCache | [![Latest Stable Version](https://poser.pugx.org/cache/simple-cache-bridge/v/stable)](https://packagist.org/packages/cache/simple-cache-bridge) [![Total Downloads](https://poser.pugx.org/cache/simple-cache-bridge/downloads)](https://packagist.org/packages/cache/simple-cache-bridge)
-| [Taggable cache] | Decorator to make any PSR-6 cache taggable | [![Latest Stable Version](https://poser.pugx.org/cache/taggable-cache/v/stable)](https://packagist.org/packages/cache/taggable-cache) [![Total Downloads](https://poser.pugx.org/cache/taggable-cache/downloads)](https://packagist.org/packages/cache/taggable-cache)
-| [Tag interop] | Interfaces to support cache tagging. (Soon PSR) | [![Latest Stable Version](https://poser.pugx.org/cache/tag-interop/v/stable)](https://packagist.org/packages/cache/tag-interop) [![Total Downloads](https://poser.pugx.org/cache/tag-interop/downloads)](https://packagist.org/packages/cache/tag-interop)
+By default, a backend exception stops the operation. Set `skip_on_failure` to remove that pool from the current chain instance and continue:
 
-## Contact
+```bash
+composer require cache/chain-adapter:^2.0 cache/void-adapter:^2.0
+```
 
-[![Gitter](https://badges.gitter.im/php-cache/cache.svg)](https://gitter.im/php-cache/cache) 
+```php
+use Cache\Adapter\Chain\CachePoolChain;
+use Cache\Adapter\Void\VoidCachePool;
 
-We would love to hear form you. Ping us on twitter [@aequasi](https://twitter.com/aequasi) and [@tobiasnyholm](https://twitter.com/tobiasnyholm). 
-You could also join us on [Gitter](https://gitter.im/php-cache/cache).
+$cache = new CachePoolChain(
+    [$redisPool, new VoidCachePool()],
+    ['skip_on_failure' => true],
+);
 
-[AdapterBundle]: https://github.com/php-cache/adapter-bundle
-[Adapter common]: https://github.com/php-cache/adapter-common
-[Apc]: https://github.com/php-cache/apc-adapter
-[Apcu]: https://github.com/php-cache/apcu-adapter
-[Array]: https://github.com/php-cache/array-adapter
-[Cache]: https://github.com/php-cache/cache
-[CacheBundle]: https://github.com/php-cache/cache-bundle
-[Chain]: https://github.com/php-cache/chain-adapter
-[Doctrine]: https://github.com/php-cache/doctrine-adapter
-[Doctrine bridge]: https://github.com/php-cache/doctrine-bridge
-[Encryption]: https://github.com/php-cache/encryption-cache
-[Filesystem]: https://github.com/php-cache/filesystem-adapter
-[Illuminate]: https://github.com/php-cache/illuminate-adapter
-[Hierarchical cache]: https://github.com/php-cache/hierarchical-cache
-[Integration tests]: https://github.com/php-cache/integration-tests
-[Memcache]: https://github.com/php-cache/memcache-adapter
-[Memcached]: https://github.com/php-cache/memcached-adapter
-[MongoDB]: https://github.com/php-cache/mongodb-adapter
-[Predis]: https://github.com/php-cache/predis-adapter
-[Redis]: https://github.com/php-cache/redis-adapter
-[Namespaced cache]: https://github.com/php-cache/namespaced-cache
-[Prefixed cache]: https://github.com/php-cache/prefixed-cache
-[Session handler]: https://github.com/php-cache/session-handler
-[Simple Cache Bridge]: https://github.com/php-cache/simple-cache-bridge
-[Taggable cache]: https://github.com/php-cache/taggable-cache
-[Tag interop]: https://github.com/php-cache/tag-interop
-[Void]: https://github.com/php-cache/void-adapter
-[Flysystem]: http://flysystem.thephpleague.com/
+$cache->setMultiple(['report' => $report], 60);
+$values = $cache->getMultiple(['report', 'missing'], null);
+```
+
+Invalid cache keys still throw. `skip_on_failure` handles exceptions during cache operations, but it cannot handle a pool that fails during construction.
+
+## Adapter-specific APIs
+
+`MemcachedCachePool` sends PSR-16 bulk calls through Memcached's native `getMulti()`, `setMulti()`, and `deleteMulti()` commands. Bulk writes share one expiration and remove old tag references only after storage succeeds.
+
+`FilesystemCachePool` exposes its Flysystem instance and cache folder through accessors:
+
+```php
+$pool->setFolder('tenant/cache');
+$pool->setFilesystem($replacementFilesystem);
+
+$folder = $pool->getFolder();
+$filesystem = $pool->getFilesystem();
+```
+
+`setFolder()` normalizes slash styles and removes empty or current-directory segments. It rejects root and parent-directory paths. `setFilesystem()` creates the current cache directory on the replacement filesystem.
+
+## Session locking
+
+The PSR-6 and PSR-16 session handlers require a `SessionLockInterface`. Pass the lock before the options array:
+
+```php
+use Cache\SessionHandler\Psr6SessionHandler;
+
+$handler = new Psr6SessionHandler($pool, $sessionLock, [
+    'prefix' => 'session.',
+    'ttl' => 3600,
+]);
+```
+
+The lock must acquire each session ID atomically across every process that shares the cache. A cache read followed by a cache write is not an atomic lock.
+
+The handler acquires the lock during session validation or reading. It holds the lock until PHP closes or destroys the session.
+
+CacheBundle supplies a Symfony Lock implementation. Standalone users must provide an implementation with a lease that recovers from crashed requests.
+
+## Bridges and integrations
+
+The project also maintains these packages:
+
+* [PSR-6 to Doctrine Cache bridge](doctrine-bridge.md)
+* [PSR-6 to PSR-16 bridge](https://github.com/php-cache/simple-cache-bridge)
+* [Encrypted cache decorator](https://github.com/php-cache/encryption-cache)
+* [Taggable cache decorator](https://github.com/php-cache/taggable-cache)
+* [PSR cache session handlers](https://github.com/php-cache/session-handler)
+* [Symfony AdapterBundle](symfony/adapter-bundle.md)
+* [Symfony CacheBundle](symfony/cache-bundle.md)
+
+Report documentation or package problems on the [GitHub issue tracker](https://github.com/php-cache/cache/issues).

@@ -1,206 +1,173 @@
-# Cache-bundle 
+# Symfony CacheBundle
 
-This is a Symfony bundle that lets you integrate **any** PSR-6 compliant cache service with the framework. 
-It lets you cache your sessions, routes, Doctrine results and metadata. It also provides an integration with the 
-debug toolbar. 
+CacheBundle connects PSR-6 pools to Symfony sessions, routing, logging, and the web profiler. Version 2 requires PHP 8.2, `psr/cache` 3, and Symfony 6.4, 7, or 8.
 
-When using this bundle you may also be interested in [AdapterBundle](adapter-bundle.md) which will help you configure 
-and register PSR-6 cache pools as services.
+Use [AdapterBundle](adapter-bundle.md) to create cache providers from configuration. CacheBundle can also use any PSR-6 service registered by the app.
 
-## To Install
+## Installation
 
-Run the following in your project root, assuming you have composer set up for your project
-
-```sh
-composer require cache/cache-bundle
+```bash
+composer require cache/cache-bundle:^2.0
 ```
 
-Add the bundles to app/AppKernel.php
+Register the bundle in `config/bundles.php` if Symfony Flex has not registered it:
 
 ```php
-$bundles = [
-    // ...
-    new Cache\CacheBundle\CacheBundle(),
+return [
+    Cache\CacheBundle\CacheBundle::class => ['all' => true],
 ];
 ```
 
+Inspect the complete configuration reference at any time:
 
-## Configuration
-
-Below is configuration for the different components where you can use caching. Most components has a `use_tagging` 
-option. That will add tags to the cache item which makes it possible to be selective when clearing cache. 
-
-To see all the config options, run `php app/console config:dump-reference cache`.
-
-### Doctrine
-
-This bundle allows you to use its services for Doctrine's caching methods of metadata, result and query. To use this 
-feature you need to install the [DoctrineBridge]. 
-
-```sh
-composer require cache/psr-6-doctrine-bridge
+```bash
+bin/console config:dump-reference cache
 ```
 
+## Session cache
 
-If you want Doctrine to use this as the result and query cache, you need this configuration: 
+Enable Symfony sessions and select a PSR-6 pool:
 
 ```yaml
-cache:
-  doctrine:
-    enabled: true
-    use_tagging: true
-    metadata:
-      service_id: 'cache.provider.acme_redis_cache'
-      entity_managers:   [ default ]       # the name of your entity_manager connection
-      document_managers: [ default ]       # the name of your document_manager connection
-    result:
-      service_id: 'cache.provider.acme_redis_cache'
-      entity_managers:   [ default, read ] # you may specify multiple entity_managers
-    query:
-      service_id: 'cache.provider.acme_redis_cache'
-      entity_managers: [ default ]
-```
+framework:
+  session: true
 
-To use this with Doctrine's entity manager, just make sure you have `useResultCache` and/or `useQueryCache` set to true. 
-
-```php
-$em = $this->get('doctrine.orm.entity_manager');
-$q = $em->('SELECT u.* FROM Acme\User u');
-$q->useResultCache(true, 3600); 
-$result = $q->getResult();
-```
-
-#### Create a DoctrineCache service
-
-If you want a service that implements DoctrineCache but is using a PSR-6 adapter you may use the `DoctrineBridgeFactory`
-directly. First you need to make sure that you have installed `cache/psr-6-doctrine-bridge`. Then you can define your 
-service like: 
-
-```yaml
-// app/config/services.yml
-services:
-  my_doctrine_cache:
-    class: Cache\AdapterBundle\DummyAdapter
-    factory: [Cache\CacheBundle\Factory\DoctrineBridgeFactory, get]
-    arguments: ['@cache.provider.my_redis', {'use_tagging':false}, []]
-```
-
-### Session
-
-This bundle even allows you to store your session data in one of your cache clusters. To enable:
-
-```yml
 cache:
   session:
     enabled: true
-    service_id: 'cache.provider.acme_redis_cache'
+    service_id: cache.provider.default
     use_tagging: true
+    prefix: session_
     ttl: 7200
+    lock_factory: lock.factory
+    lock_ttl: 300
 ```
 
-### Router
+CacheBundle registers `cache.service.session` and uses it as Symfony's `session.handler` service.
 
-This bundle also provides router caching, to help speed that section up. To enable:
+The default prefix is `session_`. When `ttl` is omitted, the session handler uses 86400 seconds.
 
-```yml
+With tagging enabled, session entries receive the `session` tag. This lets `cache:flush session` invalidate sessions without clearing unrelated entries in a shared pool.
+
+CacheBundle also registers `cache.session_lock` with the configured Symfony lock factory. Requests with the same session ID wait for an exclusive lock.
+
+The handler holds the lock from session validation or reading through the final write. It releases the lock during `close()`, `destroy()`, or storage error handling.
+
+`lock_factory` defaults to Symfony's `lock.factory` service. Symfony uses a local semaphore when supported and falls back to a local file lock.
+
+Local locks protect processes on one host. Configure a shared lock store when several hosts can handle the same session:
+
+```yaml
+framework:
+  session: true
+  lock:
+    session: '%env(SESSION_LOCK_DSN)%'
+
+cache:
+  session:
+    enabled: true
+    service_id: cache.provider.default
+    lock_factory: lock.session.factory
+    lock_ttl: 300
+```
+
+Set `SESSION_LOCK_DSN` to a store that every app host can reach. See the [Symfony Lock documentation](https://symfony.com/doc/current/lock.html) for supported stores and DSNs.
+
+`lock_ttl` is the lock lease in seconds and defaults to 300. For expiring stores, make it longer than the longest expected session request.
+
+## Router cache
+
+Router caching decorates Symfony's `router` service:
+
+```yaml
 cache:
   router:
     enabled: true
-    service_id: 'cache.provider.acme_redis_cache'
-    ttl: 86400
+    service_id: cache.provider.default
+    ttl: 604800
+    use_tagging: true
+    prefix: routes.
 ```
 
-The routing cache will make the route lookup more performant when your application have many routes, especially many 
-dynamic routes. If you just have a few routes your performance will actually be worse by enabling this. 
-Use [Blackfire](https://blackfire.io/) to profile your application to see if you should enable routing cache or not. 
+The default TTL is 604800 seconds. The default prefix is empty.
 
-If you change any of your routes, you will need to clear the cache. If you use a cache implementation that supports 
-tagging (implements [TaggablePoolInterface](https://github.com/php-cache/taggable-cache/blob/master/src/TaggablePoolInterface.php)) 
-you can clear the cache tagged with `routing`.
+Cached route matches receive the `router` and `match` tags. Generated URLs receive the `router` and `generate` tags.
 
-### Logging
+Cache keys include the request context that can affect matching or URL generation, including scheme, host, ports, base URL, path, query data, and context parameters. Results cannot cross tenants or hosts that share one pool.
 
-If you want to log all the interaction with the cache, you may do so with the following configuration.
+Router caching adds cache work to every match and generation call. Measure the real app before enabling it.
 
-```yml
+## Logging
+
+Enable logging for provider services that expose `setLogger()`:
+
+```yaml
 cache:
   logging:
     enabled: true
-    logger: 'logger' # Default service id to use for logging
-    level: 'info' # Default logging level
+    logger: logger.cache
 ```
 
-### Annotation
+The default logger service is `logger`. CacheBundle applies it to services tagged with `cache.provider`.
 
-To use a PSR-6 cache for your annotations, use the following configuration.
+## Web profiler data collector
 
-```yml
+The data collector traces services tagged with `cache.provider` and adds their calls and hit ratios to the Symfony profiler.
+
+```yaml
 cache:
-  annotation:
+  data_collector:
     enabled: true
-    service_id: 'cache.provider.acme_apc_cache'
-    use_tagging: true
-    
-framework:
-  annotations:
-    cache: 'cache.service.annotation'
 ```
 
-### Serialization
+When `enabled` is omitted, CacheBundle follows `kernel.debug`. Turn off the collector explicitly when debugging without cache traces.
 
-To use a PSR-6 cache for the serializer, use the following configuration. 
+Version 2 uses service decoration for tracing. It no longer generates subclasses of cache provider classes. The decorator preserves tag-aware pools, traces tag invalidation and failed operations, and resets its call buffer between requests in long-running workers.
 
-```yml
-cache:
-  serializer:
-    enabled: true
-    service_id: 'cache.provider.acme_apc_cache'
-    use_tagging: true
-    
-framework:
-  serializer:
-    cache: 'cache.service.serializer'
+## Clearing caches
+
+The `cache:flush` command accepts these cache types:
+
+```bash
+bin/console cache:flush session
+bin/console cache:flush router
+bin/console cache:flush symfony
+bin/console cache:flush provider cache.provider.default
+bin/console cache:flush all
 ```
 
-### Validation
+Run `bin/console cache:flush` without arguments for an interactive confirmation before clearing all configured caches.
 
-To use a PSR-6 cache for the validation, use the following configuration. 
+The `session` and `router` types invalidate their matching tag when the pool supports tags. Otherwise, they clear the entire configured pool. The `provider` type always clears the specified pool. Configured pools can remain private because the command receives a generated service locator.
 
-```yml
-cache:
-  validation:
-    enabled: true
-    service_id: 'cache.provider.acme_apc_cache'
-    use_tagging: true
+The `provider` type also accepts a public alias that resolves to a service tagged with `cache.provider`.
 
-framework:
-  validation:
-    cache: 'cache.service.validation'
-```
+The `symfony` type runs Symfony's `cache:clear` command. The `all` type clears session and router caches, then runs `cache:clear`.
 
+## Upgrading from version 1
 
-## Clearing the cache
+CacheBundle 2 removes the Doctrine, annotation, serializer, and validation integrations. Remove those sections from `cache` configuration and configure each subsystem through its maintained Symfony or Doctrine integration.
 
-If you want to clear the cache you can run the following commands.
+Session storage now requires Symfony Lock. CacheBundle creates the required lock and passes it to the PSR-6 session handler.
 
-```sh
-php app/console cache:flush session
-php app/console cache:flush router
-php app/console cache:flush doctrine
+Apps that construct `Psr6SessionHandler` or `Psr16SessionHandler` directly must pass a `SessionLockInterface` as the second constructor argument. The options array is now the third argument.
 
-echo "This is the same as php app/console cache:clear"
-php app/console cache:flush symfony 
+The `cache:flush doctrine` type no longer exists. Supported types are `all`, `session`, `router`, `symfony`, and `provider`.
 
-echo "Or you could run:"
-php app/console cache:flush all
+Remove the old `logging.level` option. Version 2 accepts only the logger service ID.
 
-echo "Run the following command to see all your options:"
-php app/console cache:flush help
-```
+If app code invalidates router entries directly, replace the old `routing` tag with `router`. Route entries also carry either `match` or `generate`.
 
-*Caution: If you are using an implementation that does not support tagging you will clear all with any of the above commands. 
-Make sure you always have the option `use_tagging` to avoid this.* 
+The underlying cache 4 packages change APCu payloads, Redis tag indexes, namespaced tag indexes, and hierarchy storage paths. Do not run old and new workers against the same affected store.
 
+Clear a namespaced store when a namespace contains bytes outside `[A-Za-z0-9_.]` or lowercase `_x`. Also clear it when a public key contains `|`, `!`, or lowercase `_x`.
 
-[CacheAdapterBundle]:https://github.com/php-cache/cache-adapter-bundle
-[DoctrineBridge]:https://github.com/php-cache/doctrine-bridge
+Clear namespaced stores containing tagged or hierarchy items. Clear a prefixed store when its prefix contains bytes outside `[A-Za-z0-9_.]` or lowercase `_x`.
+
+Use this sequence for an upgrade or rollback:
+
+1. Stop or drain every worker that uses the affected cache.
+2. Clear each affected APCu, Redis, Predis, namespaced, or prefixed store.
+3. Deploy the target version and restart the workers.
+
+Report bundle problems on the [CacheBundle issue tracker](https://github.com/php-cache/cache-bundle/issues).

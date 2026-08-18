@@ -1,28 +1,30 @@
-# PSR 6 Doctrine Bridge 
+# PSR-6 to Doctrine Cache bridge
 
-This library provides a PSR-6 compliant bridge between Doctrine and a Cache Pool. The bridge implements the 
-`Doctrine\Common\Cache\Cache` interface. This is useful for projects that require an implementation of 
-`Doctrine\Common\Cache\Cache`, but when you still want to use a PSR-6 implementation. 
+The Doctrine bridge exposes a PSR-6 pool through the legacy `Doctrine\Common\Cache\Cache` API. Use it only when a dependency still requires Doctrine Cache.
 
 ## Installation
 
-```sh
-composer require cache/psr-6-doctrine-bridge
+```bash
+composer require cache/psr-6-doctrine-bridge:^4.0
 ```
+
+Version 2 requires PHP 8.2, Doctrine Cache 2.2, and a PSR-6 v3 implementation.
 
 ## Usage
 
 ```php
-use DoctrineCacheBridge\DoctrineCacheBridge;
+use Cache\Adapter\PHPArray\ArrayCachePool;
+use Cache\Bridge\Doctrine\DoctrineCacheBridge;
 
-// Assuming $pool is an instance of \Psr\Cache\CacheItemPoolInterface
-$cacheProvider = new DoctrineBridge($pool);
+$pool = new ArrayCachePool();
+$cache = new DoctrineCacheBridge($pool);
 
-$cacheProvider->contains($key);
-$cacheProvider->fetch($key);
-$cacheProvider->save($key, $value, $ttl);
-$cacheProvider->delete($key);
+$cache->save('report.current', ['ready' => true], 60);
+$cache->contains('report.current');
+$report = $cache->fetch('report.current');
+$cache->delete('report.current');
 
-// Also, if you need it:
-$cacheProvider->getPool(); // same as $pool
+$samePool = $cache->getCachePool();
 ```
+
+The bridge normalizes characters that Doctrine Cache accepts but PSR-6 reserves.
