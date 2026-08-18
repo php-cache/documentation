@@ -1,6 +1,6 @@
 # Cache integration tests
 
-The `cache/integration-tests` package verifies PSR-6, PSR-16, tag, and hierarchy behavior. Version 1 requires PHP 8.2, PHPUnit 11, the v3 PSR cache interfaces, and `cache/tag-interop` 4.
+The `cache/integration-tests` package verifies PSR-6, PSR-16, tag, and hierarchy behavior. Version 1 requires PHP 8.2, PHPUnit 11, the v3 PSR cache interfaces, and `cache/tag-interop` 2.
 
 ## Installation
 
