@@ -8,7 +8,7 @@ The Doctrine bridge exposes a PSR-6 pool through the legacy `Doctrine\Common\Cac
 composer require cache/psr-6-doctrine-bridge:^4.0
 ```
 
-Version 2 requires PHP 8.2, Doctrine Cache 2.2, and a PSR-6 v3 implementation.
+Version 4 requires PHP 8.2, Doctrine Cache 2.2, and a PSR-6 v3 implementation.
 
 ## Usage
 
@@ -27,4 +27,4 @@ $cache->delete('report.current');
 $samePool = $cache->getCachePool();
 ```
 
-The bridge normalizes characters that Doctrine Cache accepts but PSR-6 reserves.
+The bridge keeps legacy normalized keys when the cache pool accepts them. If the pool rejects a key, the bridge retries with a 64-character SHA-256 key.
