@@ -2,7 +2,7 @@
 
 ![PHP Cache logo](https://raw.githubusercontent.com/php-cache/documentation/master/logos/php-cache-logo-256.png)
 
-PHP Cache provides small, interoperable caching packages for PHP. Version 2 requires PHP 8.2. PSR-6 adapters use `psr/cache` 3, and PSR-16 implementations use `psr/simple-cache` 3.
+PHP Cache provides small, interoperable caching packages for PHP. Version 2 requires PHP 8.2. PSR-6 adapters use `psr/cache` 3, and PSR-16 implementations support `psr/simple-cache` 2 and 3.
 
 Start with the [PSR cache introduction](introduction.md) if you are new to PSR-6 or PSR-16. Cache implementers can use the [integration test suite](implementing-cache-pools/integration-tests.md).
 
