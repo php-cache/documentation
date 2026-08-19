@@ -118,11 +118,14 @@ The data collector traces services tagged with `cache.provider` and adds their c
 cache:
   data_collector:
     enabled: true
+    include_values: false
 ```
 
 When `enabled` is omitted, CacheBundle follows `kernel.debug`. Turn off the collector explicitly when debugging without cache traces.
 
-Version 2 uses service decoration for tracing. It no longer generates subclasses of cache provider classes. The decorator preserves tag-aware pools, traces tag invalidation and failed operations, and resets its call buffer between requests in long-running workers.
+The collector includes call arguments and results by default. Set `include_values` to `false` to keep large or sensitive values out of profiler storage and the panel. Operations, timings, hit ratios, and per-pool statistics remain available.
+
+Version 2 uses service decoration for tracing. It no longer generates subclasses of cache provider classes. The decorator preserves tag-aware pools, traces tag invalidation and failed operations, and resets its call buffer between requests in long-running workers. Chain providers retain member-level traces, so the panel shows where each hit or miss occurred.
 
 ## Clearing caches
 

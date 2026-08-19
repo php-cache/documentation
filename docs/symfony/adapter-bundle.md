@@ -66,6 +66,17 @@ services:
 
 Options that contain service IDs accept values such as `@app.cache_filesystem`. The bundle converts them to Symfony service references.
 
+An app can also register its own service that implements `AdapterFactoryInterface`:
+
+```yaml
+cache_adapter:
+  providers:
+    custom:
+      factory: app.cache_factory
+```
+
+AdapterBundle resolves and validates the factory after Symfony merges every extension's services. The factory can therefore be registered by the app or another bundle.
+
 `namespace` and `pool_namespace` must contain at least one character. Invalid values fail during container configuration instead of when the provider is first used.
 
 Redis supports password-only and ACL DSNs. Percent-encode reserved characters in either credential:
@@ -75,6 +86,18 @@ redis://alice:p%40ss%3Aword@cache.example:6379/0
 ```
 
 MongoDB defaults to database `application` and collection `cache`. A database in its DSN overrides the `database` option.
+
+Memcached enables the binary protocol by default. Set the driver option to `false` when an ASCII-only proxy handles the connection:
+
+```yaml
+cache_adapter:
+  providers:
+    memcached:
+      factory: cache.factory.memcached
+      options:
+        driver_options:
+          Memcached::OPT_BINARY_PROTOCOL: false
+```
 
 ## Constructor and runtime fallback
 
