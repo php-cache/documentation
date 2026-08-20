@@ -1,13 +1,13 @@
 # Symfony AdapterBundle
 
-AdapterBundle creates PSR-6 cache services from Symfony configuration. Version 2 requires PHP 8.2, `psr/cache` 3, and Symfony 6.4, 7, or 8.
+AdapterBundle creates PSR-6 cache services from Symfony configuration. Version 2.1 requires PHP 8.2, `psr/cache` 3, and Symfony 6.4, 7, or 8. It supports PHP Cache 2 and 3 adapters.
 
 ## Installation
 
 Install the bundle and the adapter package your app needs:
 
 ```bash
-composer require cache/adapter-bundle:^2.0 cache/redis-adapter:^2.0
+composer require cache/adapter-bundle:^2.1 cache/redis-adapter:^3.0
 ```
 
 Register the bundle in `config/bundles.php` if Symfony Flex has not registered it:
@@ -18,7 +18,7 @@ return [
 ];
 ```
 
-The bundle checks each optional adapter dependency when it builds a provider. Install `cache/cache:^2.0` if the app needs the complete adapter collection.
+The bundle checks each optional adapter dependency when it builds a provider. Install `cache/cache:^3.0` if the app needs the complete adapter collection.
 
 ## Configuring providers
 
@@ -112,7 +112,7 @@ It also rejects `cache`, `php_cache`, `cache.provider.default_fallback`, and cir
 Install the Chain and Void adapters for this configuration:
 
 ```bash
-composer require cache/chain-adapter:^2.0 cache/void-adapter:^2.0
+composer require cache/chain-adapter:^2.1 cache/void-adapter:^3.0
 ```
 
 ```yaml
@@ -168,9 +168,17 @@ The Namespaced and Prefixed factories preserve native tag support from the wrapp
 
 Clearing a namespaced provider affects only its namespace. Clearing a prefixed provider clears the complete wrapped pool.
 
+## Using version 3 adapters
+
+AdapterBundle 2.1 supports PHP Cache 3 adapters while it remains compatible with PHP Cache 2 adapters.
+
+PHP Cache 3 stores a generation snapshot with each tagged item. Each tag also has a generation marker. Version 2 workers cannot safely read or update this storage format.
+
+Stop or drain all workers, clear each shared cache, and then deploy AdapterBundle 2.1 with version 3 adapters. Use the same sequence before a rollback.
+
 ## Upgrading from version 1
 
-AdapterBundle 2 removes the APC factory. Replace `cache.factory.apc` with `cache.factory.apcu` and install `cache/apcu-adapter:^2.0`.
+AdapterBundle 2 removes the APC factory. Replace `cache.factory.apc` with `cache.factory.apcu` and install `cache/apcu-adapter:^3.0`.
 
 Version 2 also removes every `cache.factory.doctrine_*` service. Replace those providers with a supported native adapter or register an external PSR-6 service directly.
 
@@ -180,7 +188,7 @@ Update renamed options in existing configuration:
 * Replace the Predis `schema` option with `scheme`.
 * Use modern DSNs for Redis, Predis, and MongoDB where practical.
 
-The underlying cache 4 packages change APCu payloads, Redis tag indexes, namespaced tag indexes, and hierarchy storage paths. Do not run old and new workers against the same affected store.
+The underlying PHP Cache packages change APCu payloads, Redis tag indexes, namespaced tag indexes, and hierarchy storage paths. Do not run old and new workers against the same affected store.
 
 Clear a namespaced store when a namespace contains bytes outside `[A-Za-z0-9_.]` or lowercase `_x`. Also clear it when a public key contains `|`, `!`, or lowercase `_x`.
 

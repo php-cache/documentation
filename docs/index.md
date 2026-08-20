@@ -2,7 +2,7 @@
 
 ![PHP Cache logo](https://raw.githubusercontent.com/php-cache/documentation/master/logos/php-cache-logo-256.png)
 
-PHP Cache provides small, interoperable caching packages for PHP. Version 2 requires PHP 8.2. PSR-6 adapters use `psr/cache` 3, and PSR-16 implementations support `psr/simple-cache` 2 and 3.
+PHP Cache provides small, interoperable caching packages for PHP. Version 3 requires PHP 8.2. PSR-6 adapters use `psr/cache` 3, and PSR-16 implementations support `psr/simple-cache` 2 and 3.
 
 Start with the [PSR cache introduction](introduction.md) if you are new to PSR-6 or PSR-16. Cache implementers can use the [integration test suite](implementing-cache-pools/integration-tests.md).
 
@@ -28,16 +28,34 @@ Each adapter is available as a separate Composer package. All PHP Cache adapters
 Install only the adapter your app needs:
 
 ```bash
-composer require cache/redis-adapter:^2.0
+composer require cache/redis-adapter:^3.0
 ```
 
 The `cache/cache` metapackage installs the complete adapter collection:
 
 ```bash
-composer require cache/cache:^2.0
+composer require cache/cache:^3.0
 ```
 
 Some adapters also require a PHP extension or client library. Check the adapter README before installation.
+
+## Upgrading to version 3
+
+Version 3 stores a generation snapshot with each tagged item. Each tag also has a generation marker. Invalidating a tag removes its marker, so older item snapshots become cache misses.
+
+The item payload and marker storage differ from version 2. Do not run version 2 and 3 workers against the same cache.
+
+`cache/adapter-common` 3 reserves public cache keys that start with `tag!` or `tagv!`. Rename app keys that use either prefix.
+
+Redis and Predis also replace tag sets with expiry-aware sorted sets under the reserved `php-cache:tag:` backend prefix.
+
+Use this deployment sequence:
+
+1. Stop or drain every version 2 worker.
+2. Clear each shared cache.
+3. Deploy version 3 and restart the workers.
+
+Use the same sequence before a rollback. The Array and Void adapters do not share stored values between workers.
 
 ## Upgrading to version 2
 
@@ -123,7 +141,7 @@ The chain implements both PSR-6 and PSR-16. Each member must implement `Cache\Ad
 By default, a backend exception stops the operation. Set `skip_on_failure` to remove that pool from the current chain instance and continue:
 
 ```bash
-composer require cache/chain-adapter:^2.0 cache/void-adapter:^2.0
+composer require cache/chain-adapter:^2.1 cache/void-adapter:^3.0
 ```
 
 ```php
@@ -156,6 +174,10 @@ $filesystem = $pool->getFilesystem();
 ```
 
 `setFolder()` normalizes slash styles and removes empty or current-directory segments. It rejects root and parent-directory paths. `setFilesystem()` creates the current cache directory on the replacement filesystem.
+
+Filesystem Adapter 3 hashes keys into 256 shard directories by default. This avoids platform-specific filenames and large flat directories.
+
+Subclasses can override the protected `getFilePath()` method for custom layouts. Custom paths must remain deterministic, portable, and below the configured cache folder. Call the parent method first to keep the default key hash. Use a dedicated cache folder because `clear()` removes every file below it.
 
 ## Session locking
 

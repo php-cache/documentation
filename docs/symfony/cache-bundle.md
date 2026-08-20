@@ -1,13 +1,13 @@
 # Symfony CacheBundle
 
-CacheBundle connects PSR-6 pools to Symfony sessions, routing, logging, and the web profiler. Version 2 requires PHP 8.2, `psr/cache` 3, and Symfony 6.4, 7, or 8.
+CacheBundle connects PSR-6 pools to Symfony sessions, routing, logging, and the web profiler. Version 2.2 requires PHP 8.2, `psr/cache` 3, and Symfony 6.4, 7, or 8. It supports PHP Cache 2 and 3 aggregate releases.
 
 Use [AdapterBundle](adapter-bundle.md) to create cache providers from configuration. CacheBundle can also use any PSR-6 service registered by the app.
 
 ## Installation
 
 ```bash
-composer require cache/cache-bundle:^2.0
+composer require cache/cache-bundle:^2.2
 ```
 
 Register the bundle in `config/bundles.php` if Symfony Flex has not registered it:
@@ -147,6 +147,14 @@ The `provider` type also accepts a public alias that resolves to a service tagge
 
 The `symfony` type runs Symfony's `cache:clear` command. The `all` type clears session and router caches, then runs `cache:clear`.
 
+## Using version 3 packages
+
+CacheBundle 2.2 supports PHP Cache 3 while it remains compatible with PHP Cache 2.
+
+PHP Cache 3 stores a generation snapshot with each tagged item. Each tag also has a generation marker. Version 2 workers cannot safely read or update this storage format.
+
+Stop or drain all workers, clear each shared cache, and then deploy CacheBundle 2.2 with PHP Cache 3. Use the same sequence before a rollback.
+
 ## Upgrading from version 1
 
 CacheBundle 2 removes the Doctrine, annotation, serializer, and validation integrations. Remove those sections from `cache` configuration and configure each subsystem through its maintained Symfony or Doctrine integration.
@@ -161,7 +169,7 @@ Remove the old `logging.level` option. Version 2 accepts only the logger service
 
 If app code invalidates router entries directly, replace the old `routing` tag with `router`. Route entries also carry either `match` or `generate`.
 
-The underlying cache 4 packages change APCu payloads, Redis tag indexes, namespaced tag indexes, and hierarchy storage paths. Do not run old and new workers against the same affected store.
+The underlying PHP Cache packages change APCu payloads, Redis tag indexes, namespaced tag indexes, and hierarchy storage paths. Do not run old and new workers against the same affected store.
 
 Clear a namespaced store when a namespace contains bytes outside `[A-Za-z0-9_.]` or lowercase `_x`. Also clear it when a public key contains `|`, `!`, or lowercase `_x`.
 

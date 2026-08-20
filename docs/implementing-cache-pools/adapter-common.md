@@ -5,12 +5,32 @@ The `cache/adapter-common` package implements the public PSR-6 and PSR-16 APIs. 
 ## Installation
 
 ```bash
-composer require cache/adapter-common:^2.0
+composer require cache/adapter-common:^3.0
 ```
 
-Version 2 requires PHP 8.2 and the v3 PSR cache interfaces.
+Version 3 requires PHP 8.2 and the v3 PSR cache interfaces.
 
 ## Upgrading a custom adapter
+
+### Version 3
+
+Version 3 stores the current generation for every item tag. `storeItemInCache()` must persist the list of `[tag, generation]` pairs from `PhpCacheItem::getTagVersions()`. `fetchObjectFromCache()` must return that same list.
+
+The default implementation stores generation markers through the normal item hooks under `tagv!` keys. It stores tag indexes under `tag!` keys.
+
+Each metadata key contains a SHA-256 digest of the tag. The key stays within the portable 64-character PSR-6 key alphabet. Both prefixes are now reserved for internal metadata.
+
+Version 3 also adds the protected `appendListItemWithExpiration()` hook. The default implementation calls `appendListItem()` and ignores the expiration timestamp.
+
+Custom subclasses that already declare `appendListItemWithExpiration()` must use this signature:
+
+```php
+protected function appendListItemWithExpiration(string $name, string $key, ?int $expirationTimestamp): bool;
+```
+
+The version 3 payload and marker format is incompatible with version 2 workers. Stop all workers and clear the backend before an upgrade or rollback.
+
+### Version 2
 
 Version 2 adds native parameter and return types to every abstract hook. A subclass with the old signatures fails during class loading.
 
@@ -44,7 +64,7 @@ abstract class StorageCachePool extends AbstractCachePool
 [true, $value, $tags, $expirationTimestamp];
 ```
 
-Return `[false, null, [], null]` for a miss, an expired record, or malformed storage data. The tags must use strings for both keys and values. The expiration value must be a Unix timestamp or `null`.
+Return `[false, null, [], null]` for a miss, an expired record, or malformed storage data. Each tag entry must be a two-element `[tag, generation]` string pair. The expiration value must be a Unix timestamp or `null`.
 
 ## Tag index hooks
 
@@ -68,6 +88,20 @@ abstract class TaggedStorageCachePool extends AbstractCachePool
 `getList()` returns a list of cache keys. The other methods update that list atomically where the backend supports atomic operations.
 
 Return `false` when the backend cannot update a tag index. `AbstractCachePool` reports that failure from the save, delete, or invalidation operation.
+
+Override `appendListItemWithExpiration()` when the backend can expire a tag index with its items. The third argument is the item's absolute Unix expiration timestamp or `null`.
+
+## Tag generation hooks
+
+The default implementation stores generation markers through the normal item hooks. An adapter can override these protected methods when its backend has a better native representation:
+
+```php
+protected function readTagVersion(string $name): ?string;
+protected function writeTagVersion(string $name, string $version): bool;
+protected function deleteTagVersion(string $name): bool;
+```
+
+`getItem()` validates the stored `[tag, generation]` pairs automatically. An optimized read path that bypasses `getItem()` must call `tagVersionsAreCurrent()` before it returns a stored value.
 
 ## Error handling
 
